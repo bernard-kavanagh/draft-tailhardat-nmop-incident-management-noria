@@ -49,6 +49,10 @@ contributor:
     fullname: Pauline Folz
     organization: Orange
     email: "pauline.folz@orange.com"
+ -
+    fullname: Clément Gouilloud
+    organization: SOFRECOM
+    email: "clement.gouilloud@sofrecom.com"
 
 normative:
 
@@ -1094,4 +1098,4 @@ v00 - v01 (draft-tailhardat-nmop-incident-management-noria)
 v01 - v02
 
 - Added the Experiments / YANG2OWL framework based on details from Fano RAMPARANY (Orange) and Pauline FOLZ (Orange).
-- Added the Experiments / YANG2OWL use case based on details from Fano RAMPARANY (Orange) and Lionel TAILHARDAT (Orange).
+- Added the Experiments / YANG2OWL use case based on details from Fano RAMPARANY (Orange), Clément GOUILLOUD (SOFRECOM), and Lionel TAILHARDAT (Orange).
