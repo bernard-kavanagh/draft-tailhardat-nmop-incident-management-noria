@@ -251,6 +251,13 @@ informative:
     date: 2024
     target: https://datatracker.ietf.org/doc/slides-121-nmop-yang-2-rdf/
 
+  GRUBER-1995:
+    author:
+      - name: Gruber, Thomas R.
+    title: "Toward principles for the design of ontologies used for knowledge sharing?"
+    date: 1995
+    target: https://doi.org/10.1006/ijhc.1995.1081
+
 --- abstract
 
 Operational efficiency in incident management on telecom and computer networks requires correlating and interpreting large volumes of heterogeneous technical information.
@@ -837,16 +844,40 @@ Note that the NORIA project does not currently address the Y-MODEL-FROM-DATA, Y-
 
 ### YANG2OWL {#sec-exp-yang2owl}
 
-The YANG2OWL framework aims at enabling ...
-building ontologies that captures the specificities of the telco domain and for using these ontologies to model any telco network instance as a KG
+The YANG2OWL framework aims at facilitating the implementation of a Network Digital Twin (NDT) that would leverage the representation and reasoning capabilities typically associated with knowledge graphs for anomaly detection needs, as well as for network management purposes by allowing network configuration based on modifications at the level of the ITSM-KG itself.
+Basically, the approach consists of reusing YANG data models used in network operations in a nearly equivalent form within Semantic Web technologies (i.e. producing ONTO-YANG-MODEL instances) to create a bijection between network configuration data and the NDT.
 
-Y-MODEL-TO-RDFS-OWL
-Y-INSTANCE-TO-KG
+The YANG2OWL framework addresses the use cases Y-MODEL-TO-RDFS-OWL and Y-INSTANCE-TO-KG (as defined in {{sec-experiments-plan}}).
 
-Note that the YANG2OWL framework does not directly address the Y-MODEL-FROM-DATA, Y-MODEL-DEPENDENCIES, and Y-MODEL-META-KG-ALIGNMENT use cases.
-, and META-KG-BEHAVIORAL-MODEL use cases.
+{{fig-yang2owl-framework}} illustrates the top-level tasks of the semantization process at play.
+In the following sections, we provide details about how the framework enables building ontologies that captures the specificities of the telco domain and for using these ontologies to model any telco network instance as an ITSM-KG.
+Please note that the publication of the related tools and algorithms is in progress.
 
-LOT4KG-2024
+~~~~ ascii-art
+                                                    ──────────
+┌──────────┐                                        Management
+│Model     │             ┌───────────┐              Operations
+│Gathering │  ──────     │Domain     │  ──────────  Ontologies
+└──────────┴─►YANG  ────►│Model      ├─►Network     ────┬─────
+┌──────────┬─►Models     │Translation│  Ontologies      │    ───────────
+│Model     │  ──────     └───────────┘  ──┬────┬──      │    Management
+│Editing   │                              │    │      ┌─▼─┐  Procedures
+└──────────┘                   ┌──────────┘    └──────► + ◄──& Expertise
+                               │                      └───┘  ───────────
+                               │                        │
+┌──────────┐  ─────────  ┌─────▼─────┐             ┌────▼─────┐
+│Equipment │  YANG       │Instances  │  ──────     │          │
+│Data      ├─►Compliant─►│Model      ├─►RDF KG────►│Reasoning │
+│Collection│  Data       │Translation│  ──────     │          │
+└──────────┘  ─────────  └───────────┘             └────┬─────┘
+                                                    ────▼─────
+                                                    Management
+                                                    Operations
+                                                    ──────────
+~~~~
+{: #fig-yang2owl-framework title="The YANG2OWL framework. Labels within boxes represent automated or human actions, while labels between top/bottom lines represent datasets"}
+
+#### Motivations and Principles {#sec-exp-yang2owl-motivations}
 
 The document {{?I-D.mackey-nmop-kg-for-netops}} (Knowledge Graph Framework for Network Operations) highlights the importance of using ontologies, in addition to using knowledge graphs for enabling the vision of network management automation.
 Whereas the document put forward the advantage of using ontologies to base the knowledge graphs on, it doesn’t say anything about how to create these ontologies.
@@ -867,63 +898,40 @@ This will be even more true in the future as YANG has been specified in the fram
 This has been the incent of our developing a tool for converting YANG models into OWL models which is point 2 of our proposal.
 Point 3, 4 and 5 are direct consequences of our committing to point 1 and 2.
 
-In the following section we introduce our proposal for building ontologies that captures the specificities of the telco domain and for using these ontologies to model any telco network instance as a KG.
+In the following section we introduce our proposal for building ontologies that captures the specificities of the telco domain and for using these ontologies to model any telco network instance as a knowledge graph.
 
-#### Semantisation process proposal {#sec-exp-yang2owl-principles}
-
-Figure {{fig-yang2owl-framework}} depicts the top level tasks of the overall semantisation process.
-
-~~~~ ascii-art
-                                                       ──────────
-                                                       Management
-┌──────────┐                                           Operations
-│Model     │               ┌───────────┐               Ontologies
-│Gathering │   ──────      │Domain     │   ──────────  ────┬─────  ───────────
-└──────────┴──►YANG  ─────►│Model      ├──►Network         │       Management
-┌──────────┬──►Models      │Translation│   Ontologies      │       Procedures
-│Model     │   ──────      └───────────┘   ──┬────┬──      │       & Expertise
-│Editing   │                                 │    │      ┌─▼─┐     ──┬────────
-└──────────┘                     ┌───────────┘    └──────► + ◄───────┘
-                                 │                       └───┘
-                                 │                         │
-┌──────────┐   ─────────   ┌─────▼─────┐              ┌────▼─────┐
-│Equipment │   YANG        │Instances  │   ──────     │          │
-│Data      ├──►Compliant──►│Model      ├──►RDF KG────►│Reasoning │
-│Collection│   Data        │Translation│   ──────     │          │
-└──────────┘   ─────────   └───────────┘              └────┬─────┘
-                                                           │
-                                                       ────▼─────
-                                                       Management
-                                                       Operations
-                                                       ──────────
-~~~~
-{: #fig-yang2owl-framework title="The YANG2OWL framework. Labels within boxes represent automated or human actions, while labels between top/bottom lines represent datasets"}
-
-##### How to create the Ontologies {#sec-exp-yang2owl-oc}
+#### The Y-MODEL-TO-RDFS-OWL step {#sec-exp-yang2owl-oc}
 
 YANG and OWL are both data modeling languages.
 They define a vocabulary and a grammar.
 The vocabulary defines the concept of the domain. YANG domain is the telco domain.
 
-In a natural language, the vocabulary defines nouns, verbs, adjectives, adverbs that are useful for talking about the world.
-The grammar specify how they should be assembled into sentences that will describe some state of the world.
+In a natural language, the vocabulary defines nouns, verbs, adjectives, and adverbs that are useful for discussing the world.
+The grammar specifies how these elements should be assembled into sentences that describe a state of the world.
+In a YANG model, the vocabulary is defined in terms of *containers*, *lists*, *leaves*, *leaf lists*, and other categories, while the grammar is defined in terms of statements that relate these elements to one another.
+In an OWL ontology, the vocabulary is defined in terms of *classes*, *subclasses*, *object properties*, and *data properties*, which is somewhat similar to YANG but does not directly map.
 
-In a YANG model, the vocabulary is defined in terms of containers, lists, leafs, leaflists and some other categories and the grammar is defined in term of statements that relates those elements to each other.
-In an OWL ontology the vocabulary is defined in term of Classes, SubClasses, DataProperties, each other.
+As ontologies have been introduced as a modeling language meant to share a common view (or knowledge) of a domain among different actors involved {{GRUBER-1995}}, the terms defined by the ontologies should be those used by equipment manufacturers, telco solutions developers, systems integrators, network operators and eventually end users, which are our actors in the telco domain.
 
-As ontologies have been introduced as a modeling language meant to share a common view (or knowledge) of a domain among different actors involved (see T. Gruber), the terms defined by the ontologies should be those used by equipment manufacturers, telco solutions developers, systems integrators, network operators and eventually end users, which are our actors in the telco domain.
+A YANG model is a document containing declarations.
+The document has a tree-like structure: declarations can contain other declarations.
+There are about half hundred types of declarations.
+The main ones are *container*, *list*, *leaf* and *leaflist*:
 
-A YANG model is a document containing declarations. The document has a tree-like structure: declarations can contain other declarations. There are about half hundred types of declarations. The main ones are container, list, leaf and leaflist.
+CONTAINER:
+: It is a concept, something we can talk about, it's basic type of element of the domain, such as a network, a node, a link. A container declaration can contain another container declaration that can be called a sub-container. This sub-container allows to define a concept that will characterize the container that contains it (e.g., link, source, and destination).
 
-- container: it's a concept, something we can talk about, it's basic type of element of the domain, such as a network, a node, a link.
-- list: is a concept that can have multiple instances, such as nodes of a network.
-- leaf: it's a property of this concept, such as an identifier or a geographical location.
-- leaflist: it's a multivalued property, such as hours of the day the device is put on sleep mode
-- A container declaration can contain another container declaration that can be called a sub-container. This sub-container allows to define a concept that will characterize the container that contains it (e.g., link, source, and destination).
+LIST:
+: It is a concept that can have multiple instances, such as nodes of a network.
 
-For the reasons sketched in the previous section, we have developed a tool call yang2owl that automatically generate OWL ontologies from YANG modules, by applying the above principles. The next paragraph introduces the architecture of yang2owl.
+LEAF:
+: It is a property of this concept, such as an identifier or a geographical location.
 
-Yang2Owl: How to automate the creation of the Ontologies
+LEAFLIST:
+: It is a multivalued property, such as hours of the day the device is put on sleep mode.
+
+By applying the above principles, and in line with the reasons sketched in {{sec-exp-yang2owl-motivations}}, we have developed the YANG2OWL that automatically generates OWL ontologies from YANG modules (i.e. computes ONTO-YANG-MODELs).
+{{fig-yang2owl-flow}} sketches the use of the YANG2OWL tool to compute the org.opendaylight.yangtools ONTO-YANG-MODEL.
 
 ~~~~ ascii-art
        YANG file
@@ -934,17 +942,21 @@ org.opendaylight.yangtools────►Abstract Syntax Tree
                                         ▼
        IETF RFC 7950──────────►Yang2OwlConverter────►OWL file
 ~~~~
-{: #fig-yang2owl-flow title="Yang2Owl: How to automate the creation of the Ontologies."}
+{: #fig-yang2owl-flow title="Computing the org.opendaylight.yangtools ONTO-YANG-MODEL with YANG2OWL."}
 
-##### KGs creation {#sec-exp-yang2owl-kgc}
+#### The Y-INSTANCE-TO-KG step {#sec-exp-yang2owl-kgc}
 
-As introduced earlier, YANG models define the vocabulary and grammar to describe factual knowledge about the state of the network. For example if a yang module define the container “node”, and this container has a leaf “identifier” which has the type “string”.  A valid json document that describe a node should be a json object containing a key named “identifier” which value should be a “string” such as “router_253”.
-So due to how we have mapped YANG statement into OWL concepts, when we parse a JSON tree that comply to a YANG model, when can assume that if we get a key which value is a json object, the key should be the name of a container or a list and its value should be a description that should be further analyzed. Thus, in terms of KG modeling, this json object should be interpreted as an instance of a class which name is the name of the container or of the list.
-Conversly, if the value is a litteral, the key should be the name of a leaf or a leaflist. Thus, in terms of KG modeling, the litteral should be interpreted as the object of a DataProperty which name is the name of the leaf.
-We are developing a tool called JSON2RDF that implements these principles. The next paragraph introduces JSON2RDF algorithm
-JSON2RDF: How to automate the creation of the KGs
-Here is the pseudo code of the algorithm implemented by JSON2RDF:
+As introduced earlier, YANG models define the vocabulary and grammar to describe factual knowledge about the state of the network.
+For example if a YANG module defines the container *node*, and this container has a leaf *identifier* which has the type *string*, then a valid JSON document with configuration data describing a node should be a JSON object containing a key named *identifier* which value should be a *string* such as *router_253*.
 
+So, in line with the mapping rules of YANG statement into OWL concepts defined in {{sec-exp-yang2owl-oc}}, when parsing a JSON tree that comply to a given YANG model when can assume that if we get a *key which value is a JSON object* then the *key should be the name of a container or a list* and its *value should be a description to be further analyzed*.
+Thus, in terms of knowledge graph modeling, this JSON object should be interpreted as an *instance of a class* which name is the *name of the container or of the list*.
+
+Conversely, if the value is a *litteral*, the *key* should be the *name of a leaf or a leaflist*.
+Thus, in terms of knowledge graph modeling, the litteral should be interpreted as the object of a DataProperty which name is the name of the leaf.
+
+The JSON2RDF tool (which is part of the YANG2OWL framework) implements these principles.
+{{snippet-json2rdf-pseudocode}} shows the algorithm implemented by JSON2RDF as pseudo code.
 
 ~~~
 function createURI(jsonObject, class, namespace, ontology) {
@@ -991,13 +1003,10 @@ The algorithm is initiated by calling the parse function (in java it should be c
 call parse(top, nil, namespace, ontology)
 ~~~
 
-Once the algorithm terminates, it has created a collection of triples that defines ...
-
-
-##### Network Change Management Use Case {#sec-exp-yang2owl-uc}
+#### A Network Change Management Example {#sec-exp-yang2owl-uc}
 
 In this section, we illustrate the YANG2OWL approach on the specific use case of Network Change Management.
-Figure {{fig-yang2owl-experiment}} provides an overview of the data processing workflow.
+{{fig-yang2owl-experiment}} provides an overview of the data processing workflow.
 
 ~~~~ ascii-art
               START
@@ -1044,7 +1053,7 @@ Figure {{fig-yang2owl-experiment}} provides an overview of the data processing w
 
 TODO : provide details.
 
-##### Discussion {#sec-exp-yang2owl-discussion}
+#### Discussion {#sec-exp-yang2owl-discussion}
 
 The YANG2OWL approach is complementary to the YANG2RDF approach {{YANG2RDF-IETF-121}}, which consists in translating YANG models into RDF.
 More specifically, YANG2RDF defines an ontology of the YANG language, where RDF graph instances model a YANG module.
