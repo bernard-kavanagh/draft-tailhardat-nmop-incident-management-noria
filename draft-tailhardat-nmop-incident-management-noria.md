@@ -242,6 +242,15 @@ informative:
     date: 2024
     target: https://doi.org/10.1007/978-3-031-78952-6_43
 
+  YANG2RDF-IETF-121:
+    author:
+      - name: Mackey, Michael
+      - name: Pererva, Anatolii
+      - name: Claise, Benoit
+    title: "YANG 2 RDF"
+    date: 2024
+    target: https://datatracker.ietf.org/doc/slides-121-nmop-yang-2-rdf/
+
 --- abstract
 
 Operational efficiency in incident management on telecom and computer networks requires correlating and interpreting large volumes of heterogeneous technical information.
@@ -1034,6 +1043,13 @@ Figure {{fig-yang2owl-experiment}} provides an overview of the data processing w
 {: #fig-yang2owl-experiment title="Flowchart for the YANG2OWL experiment. A left vertical bar on a step indicates that it is scripted; otherwise, steps require user or operator action."}
 
 TODO : provide details.
+
+##### Discussion {#sec-exp-yang2owl-discussion}
+
+The YANG2OWL approach is complementary to the YANG2RDF approach {{YANG2RDF-IETF-121}}, which consists in translating YANG models into RDF.
+More specifically, YANG2RDF defines an ontology of the YANG language, where RDF graph instances model a YANG module.
+This approach is useful for querying YANG models.
+In contrast, the YANG2OWL approach defines an ontology of a YANG model, where RDF graph instances model an operational network.
 
 # Security Considerations
 
