@@ -805,6 +805,80 @@ similarities, then use this relatedness to alert and guide the repair).
 
 Note that the NORIA project does not currently address the Y-MODEL-FROM-DATA, Y-MODEL-DEPENDENCIES, and Y-MODEL-TO-RDFS-OWL use cases.
 
+### YANG2OWL
+
+
+
+
+~~~~ ascii-art
+                                                       ──────────
+                                                       Management
+┌──────────┐                                           Operations
+│Model     │               ┌───────────┐               Ontologies
+│Gathering │   ──────      │Domain     │   ──────────  ────┬─────  ───────────
+└──────────┴──►YANG  ─────►│Model      ├──►Network         │       Management
+┌──────────┬──►Models      │Translation│   Ontologies      │       Procedures
+│Model     │   ──────      └───────────┘   ──┬────┬──      │       & Expertise
+│Editing   │                                 │    │      ┌─▼─┐     ──┬────────
+└──────────┘                     ┌───────────┘    └──────► + ◄───────┘
+                                 │                       └───┘
+                                 │                         │
+┌──────────┐   ─────────   ┌─────▼─────┐              ┌────▼─────┐
+│Equipment │   YANG        │Instances  │   ──────     │          │
+│Data      ├──►Compliant──►│Model      ├──►RDF KG────►│Reasoning │
+│Collection│   Data        │Translation│   ──────     │          │
+└──────────┘   ─────────   └───────────┘              └────┬─────┘
+                                                           │
+                                                       ────▼─────
+                                                       Management
+                                                       Operations
+                                                       ──────────
+~~~~
+{: #fig-yang2owl-framework title="The YANG2OWL framework. Labels within boxes represent automated or human actions, while labels between top/bottom lines represent datasets"}
+
+~~~~ ascii-art
+              START
+       ┌───────┘ └───────┐
+       ▼                 │
+ Model                   │
+ Gathering               │
+       │                 │
+       ▼                 │
+│Model                   │
+│Translation             │
+       │                 │
+       ▼                 │
+ Model                   │
+ Curation                │
+       │                 │
+       ▼                 ▼
+│Model-Related        │NetOps-Related
+│Knowledge Graph      │Knowledge Graph
+│Construction         │Construction
+       │                 │
+       └───────┐ ┌───────┘
+               ▼ ▼
+         │Global
+         │Knowledge Graph
+         │Construction
+                │
+                ▼
+         │Use Cases-Related
+         │Pre-Processing
+                │
+                ▼
+         │Use Cases-Related
+         │Querying
+                │
+                ▼
+          Situation
+          Analysis
+                │
+                ▼
+               END
+~~~~
+{: #fig-yang2owl-experiment title="Flowchart for the YANG2OWL experiment. A left vertical bar on a step indicates that it is scripted; otherwise, steps require user or operator action."}
+
 # Security Considerations
 
 As this document covers the *ITSM-KG* concepts, and use cases, there is no specific security considerations.
