@@ -356,7 +356,7 @@ The implementation status related to this document is also reported in this sect
 {::boilerplate bcp14-tagged}
 
 
-# An ITSM-KG for learning and sharing network behavioral models {#sec-itsm-base}
+# An ITSM-KG for Learning and Sharing Network Behavioral Models {#sec-itsm-base}
 
 ## Principles {#sec-itsm-principles}
 
@@ -450,14 +450,14 @@ A comment is provided as necessary.
 
 
 
-# Strategies for the ITSM-KG construction {#sec-kgc}
+# Strategies for the ITSM-KG Construction {#sec-kgc}
 
 In this section, we firstly define in {{sec-yang-to-kg}} two YANG-based data transformation scenario, namely the YANG-KG-SEMANTIC-EQUIVALENCE and YANG-KG-SEMANTIC-GENERALIZATION scenarios.
 The YANG-KG-SEMANTIC-GENERALIZATION scenario is then used as a basis in {{sec-gluing-techniques}} to illustrate strategies to reuse YANG models transformed in RDFS/OWL syntax in a higher-level ontology that would structure the ITSM-KG.
 Finally, two Extract-Transform-Load (ETL) pipeline approaches and a data federation architecture are presented in {{sec-etl-kgc}} to meet the needs of constructing and exploiting the ITSM-KG.
 
 
-## From YANG-based configurations to meta-knowledge graph {#sec-yang-to-kg}
+## From YANG-based Configurations to Meta-Knowledge Graph {#sec-yang-to-kg}
 
 In the following, we consider the use of Semantic Web technologies as the foundation for representing data in the form of a knowledge graph.
 We also assume the ability to transform a description of configurations and network infrastructures expressed accordingly to a given (set of) YANG model(s) into a knowledge graph representation.
@@ -487,7 +487,7 @@ In continuity of the above RFC8345 / NORIA-O example, providing an alignment may
 Examples of approaches for linking ontologies are provided in {{sec-gluing-techniques}}.
 
 
-## Implementing alignments of model-specificities to a multi-faceted knowledge graph {#sec-gluing-techniques}
+## Implementing Alignments of Model-Specificities to a Multi-Faceted Knowledge Graph {#sec-gluing-techniques}
 
 Building on the previously defined YANG-KG-SEMANTIC-GENERALIZATION scenario, this section presents two approaches to construct the structuring ontology of the ITSM-KG by combining YANG models translated into RDFS/OWL and a meta-ontology enabling the analysis of the operational context of the network lifecycle.
 As techniques for identifying alignments between data models is beyond the scope of this document, we refer interested readers to specialized literature in this field, such as {{ONTO-MATCH-2022}}.
@@ -509,7 +509,7 @@ The code snippet in {{snippet-ietf-network-node}} is a fictional example of tran
 
 The following sub-sections build on the ONTO-YANG-MODEL example from {{snippet-ietf-network-node}}.
 
-### The network of ontologies approach {#sec-network-of-ontologies}
+### The Network of Ontologies Approach {#sec-network-of-ontologies}
 
 The network of ontologies approach is a common practice in the field of knowledge engineering and Semantic Web technologies.
 The principle involves assembling vocabularies from different domains to form a coherent set, for example to infer - through graph traversal or reasoning - relationships between entities in the graph, starting from a concept defined in one of the vocabularies and leading to an instance of a concept from another vocabulary.
@@ -599,7 +599,7 @@ WHERE {
 ~~~
 {: #snippet-sparql-equivalent title="Snippet to retrieve entities of the ITSM-KG assuming the relatedness of ONTO-META concepts with ONTO-YANG-MODEL concepts, in SPARQL syntax."}
 
-### Explicit linking in the ONTO-META {#sec-linking-in-onto-meta}
+### Explicit Linking in the ONTO-META {#sec-linking-in-onto-meta}
 
 In this approach, we assume that we have the means to evolve ONTO-META, which allows for the implementation of equivalence relationships between the concepts of ONTO-META and ONTO-YANG-MODEL directly within ONTO-META, as shown in {{snippet-noria-o-extended}}.
 
@@ -645,7 +645,7 @@ noria:Resource
 {: #snippet-noria-o-extended title="Snippet of the ONTO-META describing the 'noria:Resource' concept from NORIA-O v0.3 with added linking to ONTO-YANG-MODEL, in Turtle syntax."}
 
 
-## Extract-Transform-Load pipelines for the ITSM-KG {#sec-etl-kgc}
+## Extract-Transform-Load Pipelines for the ITSM-KG {#sec-etl-kgc}
 
 Based on {{?I-D.marcas-nmop-knowledge-graph-yang}} and {{NORIA-DI-2023}}, which present the technical means to implement a pipeline for constructing the ITSM-KG, this section focuses on two complementary viewpoints:
 {{sec-etl-kgc-streams}} the management of streaming data such as alarms and logs,
@@ -653,7 +653,7 @@ and {{sec-etl-kgc-fq}} the deployment of a federated data architecture when vari
 
 From the perspective of the Digital Map Requirements ({{sec-digital-map}}), the {{fig-stream-mixed}}, {{fig-stream-mixed-kr}} and {{fig-multi-store}} particularly address the REQ-DM-SCALES requirement.
 
-### Handling event streams {#sec-etl-kgc-streams}
+### Handling Event Streams {#sec-etl-kgc-streams}
 
 The following figures illustrate different scenarios for constructing a ITSM-KG through an Extract-Transform-Load (ETL) data integration pipeline.
 
@@ -754,7 +754,7 @@ Thanks to the linking between the two storage systems, users browsing aggregated
 {: #fig-stream-mixed-kr title="Resulting knowledge representation for the mixed KG/non-KG data integration architecture for event data streams."}
 
 
-### Federated data architecture {#sec-etl-kgc-fq}
+### Federated Data Architecture {#sec-etl-kgc-fq}
 
 The {{fig-multi-store}} illustrates the principles for providing unified access to data distributed across various technological platforms and stakeholders thanks to Federated Queries {{SPARQL11-FQ}} and the use of a shared ONTO-ITSM across data management platforms.
 
@@ -803,7 +803,7 @@ The {{fig-multi-store}} illustrates the principles for providing unified access 
 
 # Experiments {#sec-experiments}
 
-## Experimental plan {#sec-experiments-plan}
+## Experimental Plan {#sec-experiments-plan}
 
 In terms of experimentation, we consider the YANG-KG-SEMANTIC-GENERALIZATION case defined in {{sec-kgc}} as the reference approach and recommend implementing a data processing pipeline that performs the following use cases:
 
@@ -827,7 +827,7 @@ Y-MODEL-META-KG-ALIGNMENT:
 META-KG-BEHAVIORAL-MODEL:
 : Based on the ITSM-KG, which results from the composition of the Y-INSTANCE-TO-KG case with Y-MODEL-META-KG-ALIGNMENT and additional operational data structured by ONTO-META, the goal is to learn behavioral models (e.g. incident signatures) in a formalism that can be interpreted through the lenses of ONTO-ITSM and shared with other stakeholders with minimal discrepancies in the underlying configuration data.
 
-## Implementation status {#sec-exp-status}
+## Implementation Status {#sec-exp-status}
 
 This section provides pointers to existing open source implementations of this document or in close relation to it.
 
@@ -1016,7 +1016,7 @@ call parse(top, nil, namespace, ontology)
 #### Example of Implementation {#sec-exp-yang2owl-uc}
 
 To illustrate the YANG2OWL approach, we briefly report below on an experiment conducted with real world data from a virtualized 5G infrastructure.
-In the context of the Network Change Management process, *impact analysis* prior to conducting a scheduled operation can be run on the ITSM-KG.
+In the context of the Network Change Management process, *impact analysis* prior to conducting a scheduled operation can be run on an ITSM-KG.
 It aims to determine all the components of the 5G core network that are dependent on a given (set of) network infrastructure element.
 For example, for a scheduled operation on a leaf node (i.e. a network element in a 2-tier spine-leaf architecture), the impact calculus will return all the servers connected to the leaf, all the Virtual Machines (VMs) hosted on these servers, all the Network Functions (NFs) deployed on these VMs, and ideally all the telecom services using these NFs.
 
@@ -1067,7 +1067,7 @@ The tasks of the diagram are described below.
 {: #fig-yang2owl-experiment title="Flowchart for the YANG2OWL experiment. A left vertical bar on a step indicates that it is scripted; otherwise, steps require user or operator action."}
 
 Model Gathering:
-: This task corresponds to the realization of the Y-MODEL-FROM-DATA use case with the manual selection of YAMG modules in relation to the 3GPP application domain. The following YANG modules have been selected: xxx, xxx, xxx.
+: This task corresponds to the realization of the Y-MODEL-FROM-DATA use case with the manual selection of YANG modules in relation to the 3GPP application domain. The following YANG modules have been selected: xxx, xxx, xxx.
 
 Model Translation:
 : It realizes the Y-MODEL-DEPENDENCIES use case using xxxx, and the Y-MODEL-TO-RDFS-OWL use case using the YANG2OWL solution as defined in {{sec-exp-yang2owl-oc}}.
@@ -1141,7 +1141,7 @@ Additionally, we would like to thank Fano Ramparany for his initial analysis of 
 
 v00 - v01 (draft-tailhardat-nmop-incident-management-noria)
 
-- Added details to the *An ITSM-KG for learning and sharing network behavioral models* section (formerly called *A meta-knowledge graph to align operator-specificities and share behavioral models of technical architectures*).
+- Added details to the *An ITSM-KG for Learning and Sharing Network Behavioral Models* section (formerly called *A meta-knowledge graph to align operator-specificities and share behavioral models of technical architectures*).
 - Added the Experiments / NORIA approach.
 
 v01 - v02
