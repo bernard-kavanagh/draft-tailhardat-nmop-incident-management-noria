@@ -1013,10 +1013,15 @@ The algorithm is initiated by calling the *parse* function (in Java, it should b
 call parse(top, nil, namespace, ontology)
 ~~~
 
-#### A Network Change Management Example {#sec-exp-yang2owl-uc}
+#### Example of Implementation {#sec-exp-yang2owl-uc}
 
-In this section, we illustrate the YANG2OWL approach on the specific use case of Network Change Management.
-{{fig-yang2owl-experiment}} provides an overview of the data processing workflow.
+To illustrate the YANG2OWL approach, we briefly report below on an experiment conducted with real world data from a virtualized 5G infrastructure.
+In the context of the Network Change Management process, *impact analysis* prior to conducting a scheduled operation can be run on the ITSM-KG.
+It aims to determine all the components of the 5G core network that are dependent on a given (set of) network infrastructure element.
+For example, for a scheduled operation on a leaf node (i.e. a network element in a 2-tier spine-leaf architecture), the impact calculus will return all the servers connected to the leaf, all the Virtual Machines (VMs) hosted on these servers, all the Network Functions (NFs) deployed on these VMs, and ideally all the telecom services using these NFs.
+
+{{fig-yang2owl-experiment}} provides an overview of the data processing workflow used for the experiment.
+The tasks of the diagram are described below.
 
 ~~~~ ascii-art
               START
@@ -1061,16 +1066,45 @@ In this section, we illustrate the YANG2OWL approach on the specific use case of
 ~~~~
 {: #fig-yang2owl-experiment title="Flowchart for the YANG2OWL experiment. A left vertical bar on a step indicates that it is scripted; otherwise, steps require user or operator action."}
 
-TODO : provide details.
+Model Gathering:
+: This task corresponds to the realization of the Y-MODEL-FROM-DATA use case with the manual selection of YAMG modules in relation to the 3GPP application domain. The following YANG modules have been selected: xxx, xxx, xxx.
+
+Model Translation:
+: It realizes the Y-MODEL-DEPENDENCIES use case using xxxx, and the Y-MODEL-TO-RDFS-OWL use case using the YANG2OWL solution as defined in {{sec-exp-yang2owl-oc}}.
+
+Model Curation:
+: This task involves providing a streamlined ontology by manually *filtering* (selection of classes and relationships based on the data available) and *grouping* (compression of the model hierarchy, i.e. class of classes) the model resulting from the *Model Translation* task.
+This simplification aims to enhance the readability of the model for an operator and facilitate the implementation of potentially more concise queries in the downstream *Use Cases-Related Querying* task.
+
+Model-Related Knowledge Graph Construction:
+: It realizes the Y-INSTANCE-TO-KG use case using the JSON2RDF solution as defined in {{sec-exp-yang2owl-kgc}}.
+
+NetOps-Related Knowledge Graph Construction:
+: This task corresponds to the execution of RML transformation rules {{RML}} with definitions from the NORIA-O ontology {{NORIA-O-2024}} for the integration of complementary data to that of the 5G network derived from YANG configurations (i.e. the *Model-Related Knowledge Graph Construction* task), such as the topology of connected networks, scheduled operations, incident tickets, and organization-related data.
+
+Global Knowledge Graph Construction:
+: TBC
+
+Y-MODEL-META-KG-ALIGNMENT
+
+Use Cases-Related Pre-Processing:
+: TBC
+
+Use Cases-Related Querying:
+: TBC {{snippet-cypher-impact-yang2owl}}
 
 ~~~
 MATCH (e1) where e1.resourceHostName = $neodash_ressource_hostname
-MATCH q1 = (e1) ((w)<-[:DEPEND_DE|COMPOSANT_DE]-(t)  ) {0,8}
+MATCH q1 = (e1) ( (w)<-[:DEPENDS_ON|COMPONENT_OF]-(t) ) {0,8}
 UNWIND t as impacts
-with impacts
-match (impacts)
+WITH impacts
+  MATCH (impacts)
 RETURN distinct impacts.resourceHostName
 ~~~
+{: #snippet-cypher-impact-yang2owl title="User query for the , in Cypher syntax."}
+
+Situation Analysis:
+: TBC
 
 #### Discussion {#sec-exp-yang2owl-discussion}
 
