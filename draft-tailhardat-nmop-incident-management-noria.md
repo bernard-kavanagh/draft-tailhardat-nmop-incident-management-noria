@@ -584,7 +584,7 @@ As a result, querying any ITSM-KG structured by the ONTO-ITSM, as shown in {{sni
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX noria: <http://data-noria.securite.fr.intraorange/ontology/>
+PREFIX noria: <https://w3id.org/noria/ontology/>
 
 SELECT ?res
 
