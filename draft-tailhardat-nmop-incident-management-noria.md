@@ -86,6 +86,13 @@ informative:
     target: https://www.w3.org/TR/rdf-schema/
     date: February 2014
 
+  SHACL:
+    title: "Shapes Constraint Language (SHACL)"
+    author:
+      organization: W3C
+    target: https://www.w3.org/TR/shacl/
+    date: July 2017
+
   RML:
     title: "RDF Mappling Language (RML)"
     author:
@@ -269,6 +276,17 @@ informative:
     title: "Toward principles for the design of ontologies used for knowledge sharing?"
     date: 1995
     target: https://doi.org/10.1006/ijhc.1995.1081
+
+  GUITTOUM-2023:
+    author:
+      - name: Guittoum, Amal
+      - name: Aı̈ssaoui, Francois
+      - name: Bolle, Sébastien
+      - name: Boyer, Fabienne
+      - name: De Palma, Noel
+    title: "Inferring Threatening IoT Dependencies Using Semantic Digital Twins Toward Collaborative IoT Device Management"
+    date: 2023
+    target: https://doi.org/10.1145/3555776.3578573
 
 --- abstract
 
@@ -1067,10 +1085,12 @@ The tasks of the diagram are described below.
 {: #fig-yang2owl-experiment title="Flowchart for the YANG2OWL experiment. A left vertical bar on a step indicates that it is scripted; otherwise, steps require user or operator action."}
 
 Model Gathering:
-: This task corresponds to the realization of the Y-MODEL-FROM-DATA use case with the manual selection of YANG modules in relation to the 3GPP application domain. The following YANG modules have been selected: xxx, xxx, xxx.
+: This task corresponds to the realization of the Y-MODEL-FROM-DATA use case with the manual selection of YANG modules in relation to the 3GPP application domain.
+The following YANG modules have been selected: xxx, xxx, xxx.
 
 Model Translation:
 : It realizes the Y-MODEL-DEPENDENCIES use case using xxxx, and the Y-MODEL-TO-RDFS-OWL use case using the YANG2OWL solution as defined in {{sec-exp-yang2owl-oc}}.
+For this experiment, the resulting ontology is called MOBILE-O.
 
 Model Curation:
 : This task involves providing a streamlined ontology by manually *filtering* (selection of classes and relationships based on the data available) and *grouping* (compression of the model hierarchy, i.e. class of classes) the model resulting from the *Model Translation* task.
@@ -1083,12 +1103,17 @@ NetOps-Related Knowledge Graph Construction:
 : This task corresponds to the execution of RML transformation rules {{RML}} with definitions from the NORIA-O ontology {{NORIA-O-2024}} for the integration of complementary data to that of the 5G network derived from YANG configurations (i.e. the *Model-Related Knowledge Graph Construction* task), such as the topology of connected networks, scheduled operations, incident tickets, and organization-related data.
 
 Global Knowledge Graph Construction:
-: TBC
-
-Y-MODEL-META-KG-ALIGNMENT
+: It is achieved through parallel insertions into a graph database of the results from the *Model-Related* and *NetOps-Related* tasks, after ensuring that:
+1) the URI patterns implemented in the RML rules of the NetOps-Related step are consistent with the URIs produced by the Model-Related step to benefit from automatic linking of triples within the graph database through the uniqueness of the URIs;
+2) the definition of mappings between MOBILE-O and NORIA-O has been implemented and inserted into the graph database (i.e. realization of the Y-MODEL-META-KG-ALIGNMENT use case through the implementation of the ONTO-LINKER concept as illustrated in {{snippet-onto-linker}}).
+For this experiment, the graph database is a Neo4J instance, and the loading is performed using the Neosemantics tool.
 
 Use Cases-Related Pre-Processing:
-: TBC
+: Dependency relationships are, in general, knowledge elements that cannot be directly derived from field data; they are part of the business knowledge regarding the operation of the equipment.
+It may therefore be beneficial to support the use case by performing pre-processing, particularly by calculating these dependency relationships retrospectively from business rules and the data loaded into the database.
+For example, one can create a *server DEPENDS_ON leaf* relationship by searching instances of the (Server)–(Server Interface)–(Network Link)–(Leaf Interface)–(Leaf) graph pattern.
+The same principle is applied to different network configurations to create the dependency relationships.
+For this experiment, the dependency relationships are calculated directly in the graph database using Cypher language queries, or externally to the graph database using SHACL shapes {{SHACL}} according to the principles described in {{GUITTOUM-2023}}.
 
 Use Cases-Related Querying:
 : TBC {{snippet-cypher-impact-yang2owl}}
@@ -1112,6 +1137,8 @@ The YANG2OWL approach is complementary to the YANG2RDF approach {{YANG2RDF-IETF-
 More specifically, YANG2RDF defines an ontology of the YANG language, where RDF graph instances model a YANG module.
 This approach is useful for querying YANG models.
 In contrast, the YANG2OWL approach defines an ontology of a YANG model, where RDF graph instances model an operational network.
+
+TBC
 
 # Security Considerations
 
