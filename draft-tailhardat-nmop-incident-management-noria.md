@@ -886,7 +886,7 @@ Basically, the approach consists of reusing YANG data models used in network ope
 The YANG2OWL framework addresses the use cases Y-MODEL-TO-RDFS-OWL and Y-INSTANCE-TO-KG (as defined in {{sec-experiments-plan}}).
 
 {{fig-yang2owl-framework}} illustrates the top-level tasks of the semantization process at play.
-In the following sections, we provide details about how the framework enables building ontologies that captures the specificities of the telco domain and for using these ontologies to model any telco network instance as an ITSM-KG.
+Subsequent sections detail how the framework builds ontologies that captures the specificities of the telco domain and models any telco network instance as an ITSM-KG.
 Please note that the publication of the related tools and algorithms is in progress.
 
 ~~~~ ascii-art
@@ -915,11 +915,9 @@ Please note that the publication of the related tools and algorithms is in progr
 
 #### Motivations and Principles {#sec-exp-yang2owl-motivations}
 
-The document {{?I-D.mackey-nmop-kg-for-netops}} (Knowledge Graph Framework for Network Operations) highlights the importance of using ontologies, in addition to using knowledge graphs for enabling the vision of network management automation.
-Whereas the document put forward the advantage of using ontologies to base the knowledge graphs on, it doesn’t say anything about how to create these ontologies.
-There isn’t either much details about how the knowledge graphs should be generated or how both the ontologies and the knowledge graphs will relate to each other.
-
-Our proposal is that:
+The document {{?I-D.mackey-nmop-kg-for-netops}} (Knowledge Graph Framework for Network Operations) emphasizes the importance of ontologies alongside knowledge graphs for network management automation.
+However, it lacks guidance on creating these ontologies and provides limited details on generating knowledge graphs or their relationship with the ontologies.
+To address these topics, the following principles have been considered to underpin the development of the YANG2OWL approach:
 
 1. The ontologies should intimately reflect YANG models,
 2. The generation of ontologies should be mostly automatized,
@@ -927,12 +925,11 @@ Our proposal is that:
 4. The generation of knowledge graphs should be automated,
 5. The nodes and predicates of the knowledge graphs should be defined as instances of classes and properties of the ontologies.
 
-We claim that point 1 of our proposal is necessary in order to ensure the adhesion of Network Management operators and expert in the semantic technology.
-Actually, it is of paramount importance to align the vocabulary of the ontology (the naming of classes and relationships) and the semantics defined by the ontology (the constraints on the use of relationships) with the vocabulary of network managers.
-It has been recognized that today the YANG language has been the reference in this area.
-This will be even more true in the future as YANG has been specified in the framework of IETF and backed by the major industrial actors of the telco domain.
-This has been the incent of our developing a tool for converting YANG models into OWL models which is point 2 of our proposal.
-Point 3, 4 and 5 are direct consequences of our committing to point 1 and 2.
+Point 1 of the proposed principles is essential for ensuring the engagement of network administrators and experts in semantic technology.
+Aligning the ontology's vocabulary (class and relationship naming) and semantics (relationship constraints) with that of network managers is crucial.
+The YANG language is currently the reference in this area and will continue to be so, given its specification by the IETF and support from major telco industry players.
+This necessity has driven the development of the YANG2OWL framework for converting YANG models into OWL models, which corresponds to point 2 of the proposal.
+Points 3, 4, and 5 are direct outcomes of the commitment to points 1 and 2.
 
 #### The Y-MODEL-TO-RDFS-OWL step {#sec-exp-yang2owl-oc}
 
@@ -967,7 +964,7 @@ LEAFLIST:
 : It is a multivalued property, such as hours of the day the device is put on sleep mode.
 
 By applying the above principles, and in line with the reasons sketched in {{sec-exp-yang2owl-motivations}}, we have developed the YANG2OWL that automatically generates OWL ontologies from YANG modules (i.e. computes ONTO-YANG-MODELs).
-{{fig-yang2owl-flow}} sketches the use of the YANG2OWL tool to compute the org.opendaylight.yangtools ONTO-YANG-MODEL.
+{{fig-yang2owl-flow}} sketches the use of the YANG2OWL tool to compute the `org.opendaylight.yangtools` ONTO-YANG-MODEL.
 
 ~~~~ ascii-art
        YANG file
@@ -982,7 +979,7 @@ org.opendaylight.yangtools────►Abstract Syntax Tree
 
 #### The Y-INSTANCE-TO-KG step {#sec-exp-yang2owl-kgc}
 
-As introduced earlier, YANG models define the vocabulary and grammar to describe factual knowledge about the state of the network.
+As introduced above, YANG models define the vocabulary and grammar to describe factual knowledge about the state of the network.
 For example if a YANG module defines the container *node*, and this container has a leaf `identifier` which has the type `string`,
 then a valid JSON document with configuration data describing a node should be a JSON object containing a key named `identifier` which value should be a `string` such as `router_253`.
 
@@ -1042,7 +1039,7 @@ call parse(top, nil, namespace, ontology)
 
 #### Example of Implementation {#sec-exp-yang2owl-uc}
 
-To illustrate the YANG2OWL approach, we briefly report below on an experiment conducted with real world data from a virtualized 5G infrastructure.
+To illustrate the YANG2OWL approach, this section briefly reports on an experiment conducted in an industrial setting with data from a virtualized 5G infrastructure.
 In the context of the Network Change Management process, *impact analysis* prior to conducting a scheduled operation can be run on an ITSM-KG.
 It aims to determine all the components of the 5G core network that are dependent of a given (set of) network infrastructure element.
 For example, for a scheduled operation on a leaf node (i.e. a network element in a 2-tier spine-leaf architecture), the impact calculus will return all the servers connected to the leaf, all the Virtual Machines (VMs) hosted on these servers, all the Network Functions (NFs) deployed on these VMs, and ideally all the telecom services using these NFs.
@@ -1095,10 +1092,10 @@ The tasks of the diagram are described below.
 
 Model Gathering:
 : This task corresponds to the realization of the Y-MODEL-FROM-DATA use case with the manual selection of YANG modules in relation to the 3GPP application domain.
-The following YANG modules have been selected: xxx, xxx, xxx.
+The following YANG modules have been selected: **xxx**, **xxx**, **xxx**.
 
 Model Translation:
-: It realizes the Y-MODEL-DEPENDENCIES use case using xxxx, and the Y-MODEL-TO-RDFS-OWL use case using the YANG2OWL solution as defined in {{sec-exp-yang2owl-oc}}.
+: It realizes the Y-MODEL-DEPENDENCIES use case using **xxx**, and the Y-MODEL-TO-RDFS-OWL use case using the YANG2OWL solution defined in {{sec-exp-yang2owl-oc}}.
 For this experiment, the resulting ontology is called MOBILE-O.
 
 Model Curation:
@@ -1106,7 +1103,7 @@ Model Curation:
 This simplification aims to enhance the readability of the model for an operator and facilitate the implementation of potentially more concise queries in the downstream *Use Cases-Related Querying* task.
 
 Model-Related Knowledge Graph Construction:
-: It realizes the Y-INSTANCE-TO-KG use case using the JSON2RDF solution as defined in {{sec-exp-yang2owl-kgc}}.
+: It realizes the Y-INSTANCE-TO-KG use case using the JSON2RDF solution described in {{sec-exp-yang2owl-kgc}}.
 
 NetOps-Related Knowledge Graph Construction:
 : It corresponds to the execution of RML transformation rules {{RML}} with definitions from the NORIA-O ontology {{NORIA-O-2024}} for the integration of complementary data to that of the 5G network derived from YANG configurations (i.e. the *Model-Related Knowledge Graph Construction* task), such as the topology of connected networks, scheduled operations, incident tickets, and organization-related data.
@@ -1120,7 +1117,7 @@ For this experiment, the graph database is a Neo4j database {{NEO4J}} instance, 
 Use Cases-Related Pre-Processing:
 : Dependency relationships are, in general, knowledge elements that cannot be directly derived from field data; they are part of the business knowledge regarding the operation of the network systems.
 It may therefore be beneficial to support the downstream *Use Cases-Related Querying* task by performing pre-processing, particularly by calculating these dependency relationships retrospectively from business rules and the data loaded into the database.
-For example, one can create a `(server)-[DEPENDS_ON]->(leaf)` relationship by searching instances of the `(Server)–(Server Interface)–(Network Link)–(Leaf Interface)–(Leaf)` graph pattern.
+For example, one can create a `(server)-[DEPENDS_ON]->(leaf)` relationship by searching instances of the `(Server)-(Server Interface)-(Network Link)-(Leaf Interface)-(Leaf)` graph pattern.
 The same principle can apply to different network configurations to create other kinds of dependency relationships.
 For this experiment, the dependency relationships are calculated directly in the graph database using Neo4j Cypher language queries, or externally to the graph database using SHACL shapes {{SHACL}} according to the principles described in {{GUITTOUM-2023}}.
 
@@ -1145,12 +1142,21 @@ potentially supported by a complementary exploration of the ITSM-KG performed al
 
 #### Discussion {#sec-exp-yang2owl-discussion}
 
-The YANG2OWL approach is complementary to the YANG2RDF approach {{YANG2RDF-IETF-121}}, which consists in translating YANG models into RDF.
+While the YANG2OWL approach has proven its validity as a proof of concept, several R&D questions remain for exploration with the NMOP community, including:
+
+- Are the conversion principles based on statement types (class vs. data property) in the Y-MODEL-TO-RDFS-OWL use case universally applicable?
+- How to ensure that an ITSM-KG can still be generically constructed from JSON/YANG data and queried when a *Model Curation* task is applied on an ONTO-YANG-MODEL?
+- What techniques can automate the Y-MODEL-META-KG-ALIGNMENT use case?
+- What principles should guide the implementation of the Y-MODEL-META-KG-ALIGNMENT use case to extract an aggregated view from ONTO-META of infrastructures/configurations represented by an ONTO-YANG-MODEL (e.g. distinguishing devices from sub-devices)?
+
+Furthermore, it is noteworthy that the YANG2OWL approach is complementary to the YANG2RDF approach {{YANG2RDF-IETF-121}}, which consists in translating YANG models into RDF.
 More specifically, YANG2RDF defines an ontology of the YANG language, where RDF graph instances model a YANG module.
 This approach is useful for querying YANG models.
 In contrast, the YANG2OWL approach defines an ontology of a YANG model, where RDF graph instances model an operational network.
+Future work may aim to combine the YANG2RDF and YANG2OWL approaches.
 
-TBC
+Finally, it is noteworthy that the YANG2OWL framework automates the *Ontology Implementation* and *Ontology Update* activities of the LOT4KG methodology {{LOT4KG-2024}} (a methodology that extends the well-known LOT ontology engineering methodology to include knowledge graph lifecycle management) by linking YANG modules with ITSM-KG fragment construction.
+This streamlines the development of NDT architectures based on knowledge graphs and simplifies ITSM-KG updates when YANG modules change.
 
 # Security Considerations
 
