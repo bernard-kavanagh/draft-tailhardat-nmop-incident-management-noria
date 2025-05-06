@@ -50,6 +50,14 @@ contributor:
     organization: Orange
     email: "pauline.folz@orange.com"
  -
+    fullname: Romain Vinel
+    organization: Orange
+    email: "romain.vinel@orange.com"
+ -
+    fullname: Arij Elmajed
+    organization: Orange
+    email: "arij.elmajed@orange.com"
+ -
     fullname: Clément Gouilloud
     organization: SOFRECOM
     email: "clement.gouilloud@sofrecom.com"
@@ -848,7 +856,7 @@ Note that the NORIA project does not currently address the Y-MODEL-FROM-DATA, Y-
 
 ### YANG2OWL {#sec-exp-yang2owl}
 
-The YANG2OWL framework aims at facilitating the implementation of a Network Digital Twin (NDT) that would leverage the representation and reasoning capabilities typically associated with knowledge graphs for anomaly detection needs, as well as for network management purposes by allowing network configuration based on modifications at the level of the ITSM-KG itself.
+The YANG2OWL framework aims at facilitating the implementation of a Network Digital Twin (NDT) that would leverage the representation and reasoning capabilities typically associated with knowledge graphs for anomaly detection needs, as well as for network management purposes by enabling network configuration based on modifications at the level of the ITSM-KG itself.
 Basically, the approach consists of reusing YANG data models used in network operations in a nearly equivalent form within Semantic Web technologies (i.e. producing ONTO-YANG-MODEL instances) to create a bijection between network configuration data and the NDT.
 
 The YANG2OWL framework addresses the use cases Y-MODEL-TO-RDFS-OWL and Y-INSTANCE-TO-KG (as defined in {{sec-experiments-plan}}).
@@ -902,8 +910,6 @@ This will be even more true in the future as YANG has been specified in the fram
 This has been the incent of our developing a tool for converting YANG models into OWL models which is point 2 of our proposal.
 Point 3, 4 and 5 are direct consequences of our committing to point 1 and 2.
 
-In the following section we introduce our proposal for building ontologies that captures the specificities of the telco domain and for using these ontologies to model any telco network instance as a knowledge graph.
-
 #### The Y-MODEL-TO-RDFS-OWL step {#sec-exp-yang2owl-oc}
 
 YANG and OWL are both data modeling languages.
@@ -915,7 +921,7 @@ The grammar specifies how these elements should be assembled into sentences that
 In a YANG model, the vocabulary is defined in terms of *containers*, *lists*, *leaves*, *leaf lists*, and other categories, while the grammar is defined in terms of statements that relate these elements to one another.
 In an OWL ontology, the vocabulary is defined in terms of *classes*, *subclasses*, *object properties*, and *data properties*, which is somewhat similar to YANG but does not directly map.
 
-As ontologies have been introduced as a modeling language meant to share a common view (or knowledge) of a domain among different actors involved {{GRUBER-1995}}, the terms defined by the ontologies should be those used by equipment manufacturers, telco solutions developers, systems integrators, network operators and eventually end users, which are our actors in the telco domain.
+As ontologies have been introduced as a modeling language meant to share a common view (or knowledge) of a domain among different stakeholders {{GRUBER-1995}}, the terms defined by the ontologies should reflect those used by equipment manufacturers, telecom solutions developers, systems integrators, network operators, and ultimately end users.
 
 A YANG model is a document containing declarations.
 The document has a tree-like structure: declarations can contain other declarations.
@@ -957,9 +963,9 @@ So, in line with the mapping rules of YANG statement into OWL concepts defined i
 Thus, in terms of knowledge graph modeling, this JSON object should be interpreted as an *instance of a class* which name is the *name of the container or of the list*.
 
 Conversely, if the value is a *litteral*, the *key* should be the *name of a leaf or a leaflist*.
-Thus, in terms of knowledge graph modeling, the litteral should be interpreted as the object of a DataProperty which name is the name of the leaf.
+Thus, in terms of knowledge graph modeling, the litteral should be interpreted as the *object of a DataProperty* which name is the *name of the leaf*.
 
-The JSON2RDF tool (which is part of the YANG2OWL framework) implements these principles.
+The JSON2RDF tool (which is part of the YANG2OWL framework) implements these principles, realizing the Y-INSTANCE-TO-KG use case.
 {{snippet-json2rdf-pseudocode}} shows the algorithm implemented by JSON2RDF as pseudo code.
 
 ~~~
@@ -1001,7 +1007,7 @@ create the triple <objectURI key elt>
 ~~~
 {: #snippet-json2rdf-pseudocode title="Pseudo code of the algorithm implemented by JSON2RDF."}
 
-The algorithm is initiated by calling the parse function (in java it should be called in the main method) as follows, where _top_ is the root of the JSON object:
+The algorithm is initiated by calling the *parse* function (in Java, it should be called in the *main* method) as follows, where _top_ is the root of the JSON object (i.e. configuration data as a JSON tree that complies to a given YANG model), and *ontology* is the output of the Y-MODEL-TO-RDFS-OWL step:
 
 ~~~
 call parse(top, nil, namespace, ontology)
@@ -1057,6 +1063,15 @@ In this section, we illustrate the YANG2OWL approach on the specific use case of
 
 TODO : provide details.
 
+~~~
+MATCH (e1) where e1.resourceHostName = $neodash_ressource_hostname
+MATCH q1 = (e1) ((w)<-[:DEPEND_DE|COMPOSANT_DE]-(t)  ) {0,8}
+UNWIND t as impacts
+with impacts
+match (impacts)
+RETURN distinct impacts.resourceHostName
+~~~
+
 #### Discussion {#sec-exp-yang2owl-discussion}
 
 The YANG2OWL approach is complementary to the YANG2RDF approach {{YANG2RDF-IETF-121}}, which consists in translating YANG models into RDF.
@@ -1098,4 +1113,4 @@ v00 - v01 (draft-tailhardat-nmop-incident-management-noria)
 v01 - v02
 
 - Added the Experiments / YANG2OWL framework based on details from Fano RAMPARANY (Orange) and Pauline FOLZ (Orange).
-- Added the Experiments / YANG2OWL use case based on details from Fano RAMPARANY (Orange), Clément GOUILLOUD (SOFRECOM), and Lionel TAILHARDAT (Orange).
+- Added the Experiments / YANG2OWL example based on details from Romain VINEL (Orange), Clément GOUILLOUD (SOFRECOM), Arij ELMAJED (Orange), and Lionel TAILHARDAT (Orange).
