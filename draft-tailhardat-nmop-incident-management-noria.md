@@ -953,7 +953,9 @@ There are about half hundred types of declarations.
 The main ones are *container*, *list*, *leaf* and *leaflist*:
 
 CONTAINER:
-: It is a concept, something we can talk about, it's basic type of element of the domain, such as a network, a node, a link. A container declaration can contain another container declaration that can be called a sub-container. This sub-container allows to define a concept that will characterize the container that contains it (e.g., link, source, and destination).
+: It is a concept, something we can talk about, it's basic type of element of the domain, such as a network, a node, a link.
+A container declaration can contain another container declaration that can be called a sub-container.
+This sub-container allows to define a concept that will characterize the container that contains it (e.g. link, source, and destination).
 
 LIST:
 : It is a concept that can have multiple instances, such as nodes of a network.
@@ -981,7 +983,8 @@ org.opendaylight.yangtools────►Abstract Syntax Tree
 #### The Y-INSTANCE-TO-KG step {#sec-exp-yang2owl-kgc}
 
 As introduced earlier, YANG models define the vocabulary and grammar to describe factual knowledge about the state of the network.
-For example if a YANG module defines the container *node*, and this container has a leaf *identifier* which has the type *string*, then a valid JSON document with configuration data describing a node should be a JSON object containing a key named *identifier* which value should be a *string* such as *router_253*.
+For example if a YANG module defines the container *node*, and this container has a leaf `identifier` which has the type `string`,
+then a valid JSON document with configuration data describing a node should be a JSON object containing a key named `identifier` which value should be a `string` such as `router_253`.
 
 So, in line with the mapping rules of YANG statement into OWL concepts defined in {{sec-exp-yang2owl-oc}}, when parsing a JSON tree that comply to a given YANG model when can assume that if we get a *key which value is a JSON object* then the *key should be the name of a container or a list* and its *value should be a description to be further analyzed*.
 Thus, in terms of knowledge graph modeling, this JSON object should be interpreted as an *instance of a class* which name is the *name of the container or of the list*.
@@ -1015,10 +1018,10 @@ function parse(object, parentURI, class, namespace, ontology) {
     if the value of object[key] is a list {
       for each elt of the list {
         if elt is an object {
-          parse(elt, objectURI, key, namespace, ontology)*
+          parse(elt, objectURI, key, namespace, ontology)
           create the triple <objectURI haskey elt>
         } else if elt is a literal
-create the triple <objectURI key elt>
+            create the triple <objectURI key elt>
     } else if the value of object[key] is an object {
         eltURI = createURI(elt,key, namespace, ontology)
         create the triple <objectURI haskey eltURI>
@@ -1031,7 +1034,7 @@ create the triple <objectURI key elt>
 ~~~
 {: #snippet-json2rdf-pseudocode title="Pseudo code of the algorithm implemented by JSON2RDF."}
 
-The algorithm is initiated by calling the *parse* function (in Java, it should be called in the *main* method) as follows, where _top_ is the root of the JSON object (i.e. configuration data as a JSON tree that complies to a given YANG model), and *ontology* is the output of the Y-MODEL-TO-RDFS-OWL step:
+The algorithm is initiated by calling the `parse` function (in Java, it should be called in the `main` method) as follows, where `top` is the root of the JSON object (i.e. configuration data as a JSON tree that complies to a given YANG model), and `ontology` is the output of the Y-MODEL-TO-RDFS-OWL step:
 
 ~~~
 call parse(top, nil, namespace, ontology)
@@ -1041,7 +1044,7 @@ call parse(top, nil, namespace, ontology)
 
 To illustrate the YANG2OWL approach, we briefly report below on an experiment conducted with real world data from a virtualized 5G infrastructure.
 In the context of the Network Change Management process, *impact analysis* prior to conducting a scheduled operation can be run on an ITSM-KG.
-It aims to determine all the components of the 5G core network that are dependent on a given (set of) network infrastructure element.
+It aims to determine all the components of the 5G core network that are dependent of a given (set of) network infrastructure element.
 For example, for a scheduled operation on a leaf node (i.e. a network element in a 2-tier spine-leaf architecture), the impact calculus will return all the servers connected to the leaf, all the Virtual Machines (VMs) hosted on these servers, all the Network Functions (NFs) deployed on these VMs, and ideally all the telecom services using these NFs.
 
 {{fig-yang2owl-experiment}} provides an overview of the data processing workflow used for the experiment.
@@ -1106,7 +1109,7 @@ Model-Related Knowledge Graph Construction:
 : It realizes the Y-INSTANCE-TO-KG use case using the JSON2RDF solution as defined in {{sec-exp-yang2owl-kgc}}.
 
 NetOps-Related Knowledge Graph Construction:
-: This task corresponds to the execution of RML transformation rules {{RML}} with definitions from the NORIA-O ontology {{NORIA-O-2024}} for the integration of complementary data to that of the 5G network derived from YANG configurations (i.e. the *Model-Related Knowledge Graph Construction* task), such as the topology of connected networks, scheduled operations, incident tickets, and organization-related data.
+: It corresponds to the execution of RML transformation rules {{RML}} with definitions from the NORIA-O ontology {{NORIA-O-2024}} for the integration of complementary data to that of the 5G network derived from YANG configurations (i.e. the *Model-Related Knowledge Graph Construction* task), such as the topology of connected networks, scheduled operations, incident tickets, and organization-related data.
 
 Global Knowledge Graph Construction:
 : It is achieved through parallel insertions into a graph database of the results from the *Model-Related* and *NetOps-Related* tasks, after ensuring that:
@@ -1117,12 +1120,14 @@ For this experiment, the graph database is a Neo4j database {{NEO4J}} instance, 
 Use Cases-Related Pre-Processing:
 : Dependency relationships are, in general, knowledge elements that cannot be directly derived from field data; they are part of the business knowledge regarding the operation of the network systems.
 It may therefore be beneficial to support the downstream *Use Cases-Related Querying* task by performing pre-processing, particularly by calculating these dependency relationships retrospectively from business rules and the data loaded into the database.
-For example, one can create a *(server)-[DEPENDS_ON]->(leaf)* relationship by searching instances of the *(Server)–(Server Interface)–(Network Link)–(Leaf Interface)–(Leaf)* graph pattern.
-The same principle can apply to different network configurations to create the dependency relationships.
-For this experiment, the dependency relationships are calculated directly in the graph database using Cypher language queries, or externally to the graph database using SHACL shapes {{SHACL}} according to the principles described in {{GUITTOUM-2023}}.
+For example, one can create a `(server)-[DEPENDS_ON]->(leaf)` relationship by searching instances of the `(Server)–(Server Interface)–(Network Link)–(Leaf Interface)–(Leaf)` graph pattern.
+The same principle can apply to different network configurations to create other kinds of dependency relationships.
+For this experiment, the dependency relationships are calculated directly in the graph database using Neo4j Cypher language queries, or externally to the graph database using SHACL shapes {{SHACL}} according to the principles described in {{GUITTOUM-2023}}.
 
 Use Cases-Related Querying:
-: TBC {{snippet-cypher-impact-yang2owl}}
+: The exploitation of dependency relationships is carried out through queries on the graph,
+e.g. during the insertion of an entity of type `noria:ChangeRequest`
+or by following an exploratory approach by coupling a query such as that in {{snippet-yang2owl-cypher-impact}} with a visualization tool like Neo4j NeoDash.
 
 ~~~
 MATCH (e1) where e1.resourceHostName = $neodash_ressource_hostname
@@ -1132,10 +1137,11 @@ WITH impacts
   MATCH (impacts)
 RETURN distinct impacts.resourceHostName
 ~~~
-{: #snippet-cypher-impact-yang2owl title="User query for the , in Cypher syntax."}
+{: #snippet-yang2owl-cypher-impact title="User query, in Cypher syntax, for rendering dependency relationships in a Neo4j NeoDash display."}
 
 Situation Analysis:
-: TBC
+: Decision-making based on the results of the upstream task is the responsibility of the network administrator,
+potentially supported by a complementary exploration of the ITSM-KG performed algorithmically or interactively to analyze a broader technical and operational context.
 
 #### Discussion {#sec-exp-yang2owl-discussion}
 
