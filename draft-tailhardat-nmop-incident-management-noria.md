@@ -288,6 +288,12 @@ informative:
     date: 2023
     target: https://doi.org/10.1145/3555776.3578573
 
+  NEO4J:
+    author:
+      - organization: Neo4j, Inc.
+    title: "Neo4j - Graph Database & Analytics"
+    target: https://neo4j.com/
+
 --- abstract
 
 Operational efficiency in incident management on telecom and computer networks requires correlating and interpreting large volumes of heterogeneous technical information.
@@ -1106,13 +1112,13 @@ Global Knowledge Graph Construction:
 : It is achieved through parallel insertions into a graph database of the results from the *Model-Related* and *NetOps-Related* tasks, after ensuring that:
 1) the URI patterns implemented in the RML rules of the NetOps-Related step are consistent with the URIs produced by the Model-Related step to benefit from automatic linking of triples within the graph database through the uniqueness of the URIs;
 2) the definition of mappings between MOBILE-O and NORIA-O has been implemented and inserted into the graph database (i.e. realization of the Y-MODEL-META-KG-ALIGNMENT use case through the implementation of the ONTO-LINKER concept as illustrated in {{snippet-onto-linker}}).
-For this experiment, the graph database is a Neo4J instance, and the loading is performed using the Neosemantics tool.
+For this experiment, the graph database is a Neo4j database {{NEO4J}} instance, and the loading is performed using the Neo4j Neosemantics tool.
 
 Use Cases-Related Pre-Processing:
-: Dependency relationships are, in general, knowledge elements that cannot be directly derived from field data; they are part of the business knowledge regarding the operation of the equipment.
-It may therefore be beneficial to support the use case by performing pre-processing, particularly by calculating these dependency relationships retrospectively from business rules and the data loaded into the database.
-For example, one can create a *server DEPENDS_ON leaf* relationship by searching instances of the (Server)–(Server Interface)–(Network Link)–(Leaf Interface)–(Leaf) graph pattern.
-The same principle is applied to different network configurations to create the dependency relationships.
+: Dependency relationships are, in general, knowledge elements that cannot be directly derived from field data; they are part of the business knowledge regarding the operation of the network systems.
+It may therefore be beneficial to support the downstream *Use Cases-Related Querying* task by performing pre-processing, particularly by calculating these dependency relationships retrospectively from business rules and the data loaded into the database.
+For example, one can create a *(server)-[DEPENDS_ON]->(leaf)* relationship by searching instances of the *(Server)–(Server Interface)–(Network Link)–(Leaf Interface)–(Leaf)* graph pattern.
+The same principle can apply to different network configurations to create the dependency relationships.
 For this experiment, the dependency relationships are calculated directly in the graph database using Cypher language queries, or externally to the graph database using SHACL shapes {{SHACL}} according to the principles described in {{GUITTOUM-2023}}.
 
 Use Cases-Related Querying:
