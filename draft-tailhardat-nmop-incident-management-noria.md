@@ -39,16 +39,24 @@ author:
     fullname: Yoan Chabot
     organization: Orange
     email: yoan.chabot@orange.com
-
-contributor:
  -
     fullname: Fano Ramparany
     organization: Orange
     email: "fano.ramparany@orange.com"
+
+contributor:
  -
     fullname: Pauline Folz
     organization: Orange
     email: "pauline.folz@orange.com"
+ -
+    fullname: Fabrice Blache
+    organization: Orange
+    email: "fabrice.blache@orange.com"
+ -
+    fullname: Sébastien Bolle
+    organization: Orange
+    email: "sebastien.bolle@orange.com"
  -
     fullname: Romain Vinel
     organization: Orange
@@ -983,7 +991,7 @@ As introduced above, YANG models define the vocabulary and grammar to describe f
 For example if a YANG module defines the container *node*, and this container has a leaf `identifier` which has the type `string`,
 then a valid JSON document with configuration data describing a node should be a JSON object containing a key named `identifier` which value should be a `string` such as `router_253`.
 
-So, in line with the mapping rules of YANG statement into OWL concepts defined in {{sec-exp-yang2owl-oc}}, when parsing a JSON tree that comply to a given YANG model when can assume that if we get a *key which value is a JSON object* then the *key should be the name of a container or a list* and its *value should be a description to be further analyzed*.
+So, in line with the mapping rules of YANG statement into OWL concepts defined in {{sec-exp-yang2owl-oc}}, when parsing a JSON tree that comply to a given YANG model we can assume that if we get a *key which value is a JSON object* then the *key should be the name of a container or a list* and its *value should be a description to be further analyzed*.
 Thus, in terms of knowledge graph modeling, this JSON object should be interpreted as an *instance of a class* which name is the *name of the container or of the list*.
 
 Conversely, if the value is a *litteral*, the *key* should be the *name of a leaf or a leaflist*.
@@ -1191,5 +1199,5 @@ v00 - v01 (draft-tailhardat-nmop-incident-management-noria)
 
 v01 - v02
 
-- Added the Experiments / YANG2OWL framework based on details from Fano RAMPARANY (Orange) and Pauline FOLZ (Orange).
+- Added the Experiments / YANG2OWL framework based on details from Fano RAMPARANY (Orange), Pauline FOLZ (Orange), and Fabrice BLACHE (Orange).
 - Added the Experiments / YANG2OWL example based on details from Romain VINEL (Orange), Clément GOUILLOUD (SOFRECOM), Arij ELMAJED (Orange), and Lionel TAILHARDAT (Orange).
