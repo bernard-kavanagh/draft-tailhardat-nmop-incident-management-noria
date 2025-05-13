@@ -43,12 +43,16 @@ author:
     fullname: Fano Ramparany
     organization: Orange Research
     email: "fano.ramparany@orange.com"
-
-contributor:
  -
     fullname: Pauline Folz
     organization: Orange Research
     email: "pauline.folz@orange.com"
+
+contributor:
+ -
+    fullname: Maria Massri
+    organization: Orange Research
+    email: "maria.massri@orange.com"
  -
     fullname: Fabrice Blache
     organization: Orange Research
