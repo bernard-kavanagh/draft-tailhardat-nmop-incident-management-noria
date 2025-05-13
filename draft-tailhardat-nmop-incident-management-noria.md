@@ -29,7 +29,7 @@ venue:
 author:
  -
     fullname: Lionel Tailhardat
-    organization: Orange
+    organization: Orange Research
     email: "lionel.tailhardat@orange.com"
  -
     fullname: Raphaël Troncy
@@ -37,33 +37,33 @@ author:
     email: raphael.troncy@eurecom.fr
  -
     fullname: Yoan Chabot
-    organization: Orange
+    organization: Orange Research
     email: yoan.chabot@orange.com
  -
     fullname: Fano Ramparany
-    organization: Orange
+    organization: Orange Research
     email: "fano.ramparany@orange.com"
 
 contributor:
  -
     fullname: Pauline Folz
-    organization: Orange
+    organization: Orange Research
     email: "pauline.folz@orange.com"
  -
     fullname: Fabrice Blache
-    organization: Orange
+    organization: Orange Research
     email: "fabrice.blache@orange.com"
  -
     fullname: Sébastien Bolle
-    organization: Orange
+    organization: Orange Research
     email: "sebastien.bolle@orange.com"
  -
     fullname: Romain Vinel
-    organization: Orange
+    organization: Orange France
     email: "romain.vinel@orange.com"
  -
     fullname: Arij Elmajed
-    organization: Orange
+    organization: Orange France
     email: "arij.elmajed@orange.com"
  -
     fullname: Clément Gouilloud
