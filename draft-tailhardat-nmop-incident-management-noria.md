@@ -1141,9 +1141,24 @@ For this experiment, the graph database is a Neo4j database {{NEO4J}} instance, 
 Use Cases-Related Pre-Processing:
 : Dependency relationships are, in general, knowledge elements that cannot be directly derived from field data; they are part of the business knowledge regarding the operation of the network systems.
 It may therefore be beneficial to support the downstream *Use Cases-Related Querying* task by performing pre-processing, particularly by calculating these dependency relationships retrospectively from business rules and the data loaded into the database.
-For example, one can create a `(server)-[DEPENDS_ON]->(leaf)` relationship by searching instances of the `(Server)-(Server Interface)-(Network Link)-(Leaf Interface)-(Leaf)` graph pattern.
+For example, one can create a `(Server)-[DEPENDS_ON]->(Leaf)` relationship by searching instances of the `(Server)-(Server Interface)-(Network Link)-(Leaf Interface)-(Leaf)` graph pattern.
 The same principle can apply to different network configurations to create other kinds of dependency relationships.
-For this experiment, the dependency relationships are calculated directly in the graph database using Neo4j Cypher language queries, or externally to the graph database using SHACL shapes {{SHACL}} according to the principles described in {{GUITTOUM-2023}}.
+: For this experiment, the dependency relationships are calculated directly in the graph database using Neo4j Cypher language queries, or externally to the graph database using SHACL shapes {{SHACL}} according to the principles described in {{GUITTOUM-2023}}.
+As another example, more specific to the 3GPP models {{ETSI-TS-128-541}} included in MOBILE-O and the Neo4j setup, one could calculate a dependency relationship between a 5G NF and the Kubernetes cluster that hosts it, as shown in {{snippet-yang2owl-cypher-5G-dependency}}.
+It is important to note that sub-class inference with Neo4j is not automatic and must be performed through dedicated queries, as illustrated in {{snippet-yang2owl-cypher-subclass-inference}}.
+
+~~~
+MATCH (c:ManagedFunction)--(n:namespace)--(k:ClusterKubernetes)
+MERGE (c)-[d:DEPENDS_ON]->(k)
+~~~
+{: #snippet-yang2owl-cypher-5G-dependency title="Dependency calculation query, in Cypher syntax, for relating a 5G NF and the Kubernetes cluster that hosts it."}
+
+~~~
+MATCH (m)<-[:subClassOf]-(x)<-[:type]-(c)
+WHERE m.uri CONTAINS 'ManagedFunction'
+SET c:ManagedFunction
+~~~
+{: #snippet-yang2owl-cypher-subclass-inference title="Sub-class inference query, in Cypher syntax: each instance of a 5G NF is created with a specific class described in the YANG model, which is a subclass of ManagedFunction as per MOBILE-O, thus a dedicated Cypher query is required for all types of NFs to be tagged as ManagedFunction"}
 
 Use Cases-Related Querying:
 : The exploitation of dependency relationships is carried out through queries on the graph,
