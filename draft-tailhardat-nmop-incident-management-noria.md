@@ -1167,10 +1167,8 @@ or by following an exploratory approach by coupling a query such as that in {{sn
 
 ~~~
 MATCH (e1) where e1.resourceHostName = $neodash_ressource_hostname
-MATCH q1 = (e1) ( (w)<-[:DEPENDS_ON|COMPONENT_OF]-(t) ) {0,8}
+MATCH q1 = (e1) ((w)<-[:DEPENDS_ON]-(t)) {0,8}
 UNWIND t as impacts
-WITH impacts
-  MATCH (impacts)
 RETURN distinct impacts.resourceHostName
 ~~~
 {: #snippet-yang2owl-cypher-impact title="User query, in Cypher syntax, for rendering dependency relationships in a Neo4j NeoDash display."}
