@@ -302,6 +302,13 @@ informative:
     title: "Neo4j - Graph Database & Analytics"
     target: https://neo4j.com/
 
+  ETSI-TS-128-541:
+    author:
+      - organization: ETSI
+    title: "5G; Management and orchestration; 5G Network Resource Model (NRM); Stage 2 and stage 3 (3GPP TS 28.541 version 18.9.0 Release 18)"
+    date: 2024-10
+    target: https://www.etsi.org/deliver/etsi_ts/128500_128599/128541/18.09.00_60/ts_128541v180900p.pdf
+
 --- abstract
 
 Operational efficiency in incident management on telecom and computer networks requires correlating and interpreting large volumes of heterogeneous technical information.
@@ -1100,7 +1107,7 @@ The tasks of the diagram are described below.
 
 Model Gathering:
 : This task corresponds to the realization of the Y-MODEL-FROM-DATA use case with the manual selection of YANG modules in relation to the 3GPP application domain.
-The following YANG modules have been selected: **xxx**, **xxx**, **xxx**.
+The YANG modules from {{ETSI-TS-128-541}} have been selected for this experiment.
 
 Model Translation:
 : It realizes the Y-MODEL-DEPENDENCIES use case using **xxx**, and the Y-MODEL-TO-RDFS-OWL use case using the YANG2OWL solution defined in {{sec-exp-yang2owl-oc}}.
