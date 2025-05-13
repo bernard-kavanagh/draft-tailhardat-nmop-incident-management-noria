@@ -1117,7 +1117,7 @@ Model Gathering:
 The YANG modules from {{ETSI-TS-128-541}} have been selected for this experiment.
 
 Model Translation:
-: For a given YANG module, it implements the Y-MODEL-DEPENDENCIES use case by fetching sub-YANG modules from well-known GitHub repositories.
+: For a given YANG module, this task implements the Y-MODEL-DEPENDENCIES use case by fetching sub-YANG modules from well-known GitHub repositories used for storing YANG modules (e.g. IETF, IEEE, IANA, ETSI, broadband forum, OpenROADM, OpenConfig, Cisco, Huawei, to name a few).
 This is achieved by scrutinizing `import` clauses (including imports of imports) and examining module locations and relationships from the {{YANG-CATALOG}}.
 Additionally, it addresses the Y-MODEL-TO-RDFS-OWL use case using the YANG2OWL solution defined in {{sec-exp-yang2owl-oc}}.
 For this experiment, the resulting ontology is referred to as MOBILE-O.
@@ -1172,6 +1172,7 @@ While the YANG2OWL approach has proven its validity as a proof of concept, sever
 - How to ensure that an ITSM-KG can still be generically constructed from JSON/YANG data and queried when a *Model Curation* task is applied on an ONTO-YANG-MODEL?
 - What techniques can automate the Y-MODEL-META-KG-ALIGNMENT use case?
 - What principles should guide the implementation of the Y-MODEL-META-KG-ALIGNMENT use case to extract an aggregated view from ONTO-META of infrastructures/configurations represented by an ONTO-YANG-MODEL (e.g. distinguishing devices from sub-devices)?
+- As mentioned in {{?I-D.boucadair-nmop-rfc3535-20years-later}} (NEW-OPS-REQ-QUICK-BUT-WELL), how can we ensure reliable retrieval of dependencies between YANG modules for the Y-MODEL-DEPENDENCIES use case? Indeed, while browsing the GitHub projects of module developers, we observe a lack of uniformity in the way modules are presented and managed (e.g. differences in project structure, replication and local modifications of reference modules), which hinders dependency calculation.
 
 Furthermore, it is noteworthy that the YANG2OWL approach is complementary to the YANG2RDF approach {{YANG2RDF-IETF-121}}, which consists in translating YANG models into RDF.
 More specifically, YANG2RDF defines an ontology of the YANG language, where RDF graph instances model a YANG module.
