@@ -973,7 +973,7 @@ As ontologies have been introduced as a modeling language meant to share a commo
 A YANG model is a document containing declarations.
 The document has a tree-like structure: declarations can contain other declarations.
 There are about half hundred types of declarations.
-The main ones are *container*, *list*, *leaf* and *leaflist*:
+The main ones are *container*, *list*, *leaf* and *leaf-list*:
 
 CONTAINER:
 : It is a concept, something we can talk about, it's basic type of element of the domain, such as a network, a node, a link.
@@ -986,7 +986,7 @@ LIST:
 LEAF:
 : It is a property of this concept, such as an identifier or a geographical location.
 
-LEAFLIST:
+LEAF-LIST:
 : It is a multivalued property, such as hours of the day the device is put on sleep mode.
 
 By applying the above principles, and in line with the reasons sketched in {{sec-exp-yang2owl-motivations}}, we have developed the YANG2OWL that automatically generates OWL ontologies from YANG modules (i.e. computes ONTO-YANG-MODELs).
@@ -1002,6 +1002,17 @@ org.opendaylight.yangtools────►Abstract Syntax Tree
        IETF RFC 7950──────────►Yang2OwlConverter────►OWL file
 ~~~~
 {: #fig-yang2owl-flow title="Computing the org.opendaylight.yangtools ONTO-YANG-MODEL with YANG2OWL."}
+
+In more detail, we have defined mapping rules between YANG constructs and OWL concepts and implemented these in YANG2OWL.
+The main YANG constructs (*container*, *list*, *leaf*, and *leaf-list*) are transformed as follows:
+
+- The *container* and *list* declarations are converted into OWL classes.
+The name of the OWL class correponds to the name of the *container* or *list* in the YANG model.
+
+- The *leaf* and *leaf-list* declarations are converted into OWL data properties.
+The name of the OWL data property corresponds the name of the *leaf* or *leaf-list* in the YANG model.
+
+An example of this conversion is presented in the following section.
 
 #### The Y-INSTANCE-TO-KG step {#sec-exp-yang2owl-kgc}
 
@@ -1233,5 +1244,5 @@ v00 - v01 (draft-tailhardat-nmop-incident-management-noria)
 
 v01 - v02
 
-- Added the Experiments / YANG2OWL framework based on details from Fano RAMPARANY (Orange), Pauline FOLZ (Orange), and Fabrice BLACHE (Orange).
-- Added the Experiments / YANG2OWL example based on details from Romain VINEL (Orange), Clément GOUILLOUD (SOFRECOM), Arij ELMAJED (Orange), and Lionel TAILHARDAT (Orange).
+- Added the Experiments / YANG2OWL framework based on details from Fano RAMPARANY (Orange Research), Pauline FOLZ (Orange Research), and Fabrice BLACHE (Orange Research).
+- Added the Experiments / YANG2OWL example based on details from Romain VINEL (Orange France), Clément GOUILLOUD (SOFRECOM), Arij ELMAJED (Orange France), and Lionel TAILHARDAT (Orange Research).
