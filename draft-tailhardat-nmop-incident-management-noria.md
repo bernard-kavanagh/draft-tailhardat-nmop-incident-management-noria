@@ -309,6 +309,13 @@ informative:
     date: 2024-10
     target: https://www.etsi.org/deliver/etsi_ts/128500_128599/128541/18.09.00_60/ts_128541v180900p.pdf
 
+  YANG-CATALOG:
+    author:
+      - organization: Cisco
+      - organization: IETF
+    title: "YANG Catalog"
+    target: https://www.yangcatalog.org/
+
 --- abstract
 
 Operational efficiency in incident management on telecom and computer networks requires correlating and interpreting large volumes of heterogeneous technical information.
@@ -1110,8 +1117,10 @@ Model Gathering:
 The YANG modules from {{ETSI-TS-128-541}} have been selected for this experiment.
 
 Model Translation:
-: It realizes the Y-MODEL-DEPENDENCIES use case using **xxx**, and the Y-MODEL-TO-RDFS-OWL use case using the YANG2OWL solution defined in {{sec-exp-yang2owl-oc}}.
-For this experiment, the resulting ontology is called MOBILE-O.
+: For a given YANG module, it implements the Y-MODEL-DEPENDENCIES use case by fetching sub-YANG modules from well-known GitHub repositories.
+This is achieved by scrutinizing `import` clauses (including imports of imports) and examining module locations and relationships from the {{YANG-CATALOG}}.
+Additionally, it addresses the Y-MODEL-TO-RDFS-OWL use case using the YANG2OWL solution defined in {{sec-exp-yang2owl-oc}}.
+For this experiment, the resulting ontology is referred to as MOBILE-O.
 
 Model Curation:
 : This task involves providing a streamlined ontology by manually *filtering* (selection of classes and relationships based on the data available) and *grouping* (compression of the model hierarchy, i.e. class of classes) the model resulting from the *Model Translation* task.
