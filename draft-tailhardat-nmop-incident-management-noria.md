@@ -969,7 +969,7 @@ The vocabulary defines the concept of the domain. YANG domain is the telco domai
 
 In a natural language, the vocabulary defines nouns, verbs, adjectives, and adverbs that are useful for discussing the world.
 The grammar specifies how these elements should be assembled into sentences that describe a state of the world.
-In a YANG model, the vocabulary is defined in terms of *containers*, *lists*, *leaves*, *leaf lists*, and other categories, while the grammar is defined in terms of statements that relate these elements to one another.
+In a YANG model, the vocabulary is defined in terms of *containers*, *lists*, *leaves*, *leaf-lists*, and other categories, while the grammar is defined in terms of statements that relate these elements to one another.
 In an OWL ontology, the vocabulary is defined in terms of *classes*, *subclasses*, *object properties*, and *data properties*, which is somewhat similar to YANG but does not directly map.
 
 As ontologies have been introduced as a modeling language meant to share a common view (or knowledge) of a domain among different stakeholders {{GRUBER-1995}}, the terms defined by the ontologies should reflect those used by equipment manufacturers, telecom solutions developers, systems integrators, network operators, and ultimately end users.
@@ -980,7 +980,7 @@ There are about half hundred types of declarations.
 The main ones are *container*, *list*, *leaf* and *leaf-list*:
 
 CONTAINER:
-: It is a concept, something we can talk about, it's basic type of element of the domain, such as a network, a node, a link.
+: It is a concept, something we can talk about ; it is the the basic type of elements of the domain, such as a network, a node, a link.
 A container declaration can contain another container declaration that can be called a sub-container.
 This sub-container allows to define a concept that will characterize the container that contains it (e.g. link, source, and destination).
 
