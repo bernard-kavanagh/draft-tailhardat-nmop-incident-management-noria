@@ -62,6 +62,10 @@ contributor:
     organization: Orange Research
     email: "sebastien.bolle@orange.com"
  -
+    fullname: Thomas Hassan
+    organization: Orange Research
+    email: "thomas.hassan@orange.com"
+ -
     fullname: Romain Vinel
     organization: Orange France
     email: "romain.vinel@orange.com"
@@ -1034,7 +1038,7 @@ function createURI(jsonObject, class, namespace, ontology) {
   if class has a 'key' annotation {
     get the content <keycontent> of this annotation
     search the key <keycontent> in the jsonObject
-    use the namespace and the value of this key to create the URI
+    append the key to the namespace to create the URI
   } else {
     generate a unique URI
   }
@@ -1068,7 +1072,7 @@ function parse(object, parentURI, class, namespace, ontology) {
 ~~~
 {: #snippet-json2rdf-pseudocode title="Pseudo code of the algorithm implemented by JSON2RDF."}
 
-The algorithm is initiated by calling the `parse` function (in Java, it should be called in the `main` method) as follows, where `top` is the root of the JSON object (i.e. configuration data as a JSON tree that complies to a given YANG model), and `ontology` is the output of the Y-MODEL-TO-RDFS-OWL step:
+The algorithm is initiated by calling the `parse` function as follows, where `top` is the root of the JSON object (i.e. configuration data as a JSON tree that complies to a given YANG model), and `ontology` is the output of the Y-MODEL-TO-RDFS-OWL step:
 
 ~~~
 call parse(top, nil, namespace, ontology)
