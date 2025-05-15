@@ -1155,7 +1155,7 @@ Global Knowledge Graph Construction:
 : It is achieved through parallel insertions into a graph database of the results from the *Model-Related* and *NetOps-Related* tasks, after ensuring that:
 1) the URI patterns implemented in the RML rules of the NetOps-Related step are consistent with the URIs produced by the Model-Related step to benefit from automatic linking of triples within the graph database through the uniqueness of the URIs;
 2) the definition of mappings between MOBILE-O and NORIA-O has been implemented and inserted into the graph database (i.e. realization of the Y-MODEL-META-KG-ALIGNMENT use case through the implementation of the ONTO-LINKER concept as illustrated in {{snippet-onto-linker}}).
-For this experiment, the graph database is a Neo4j database {{NEO4J}} instance, and the loading is performed using the Neo4j Neosemantics tool.
+For this experiment, the graph database is a Neo4j database {{NEO4J}} instance, and the loading is performed using the Neo4j Neosemantics toolkit.
 
 Use Cases-Related Pre-Processing:
 : Dependency relationships are, in general, knowledge elements that cannot be directly derived from field data; they are part of the business knowledge regarding the operation of the network systems.
@@ -1185,12 +1185,12 @@ e.g. during the insertion of an entity of type `noria:ChangeRequest`
 or by following an exploratory approach by coupling a query such as that in {{snippet-yang2owl-cypher-impact}} with a visualization tool like Neo4j NeoDash.
 
 ~~~
-MATCH (e1) where e1.resourceHostName = $neodash_ressource_hostname
+MATCH (e1) WHERE e1.resourceHostName = $neodash_ressource_hostname
 MATCH q1 = (e1) ((w)<-[:DEPENDS_ON]-(t)) {0,8}
-UNWIND t as impacts
-RETURN distinct impacts.resourceHostName
+UNWIND t AS impacts
+RETURN DISTINCT impacts.resourceHostName
 ~~~
-{: #snippet-yang2owl-cypher-impact title="User query, in Cypher syntax, for rendering dependency relationships in a Neo4j NeoDash display."}
+{: #snippet-yang2owl-cypher-impact title="User query, in Cypher syntax using a quantified path pattern, for rendering dependency relationships in a Neo4j NeoDash display. The query seeks paths starting from the node e1 and propagates up to 8 times using the `DEPENDS_ON` relationships. The depth of 8 has been defined in relation to the characteristics of the networks addressed in the experimentation."}
 
 Situation Analysis:
 : Decision-making based on the results of the upstream task is the responsibility of the network administrator,
