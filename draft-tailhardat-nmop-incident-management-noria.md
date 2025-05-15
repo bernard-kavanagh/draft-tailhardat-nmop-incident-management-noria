@@ -991,7 +991,7 @@ LEAF:
 : It is a property of this concept, such as an identifier or a geographical location.
 
 LEAF-LIST:
-: It is a multivalued property, such as hours of the day the device is put on sleep mode.
+: It is a multivalued property, such as hours of the day the device is in sleep mode.
 
 By applying the above principles, and in line with the reasons sketched in {{sec-exp-yang2owl-motivations}}, we have developed the YANG2OWL that automatically generates OWL ontologies from YANG modules (i.e. computes ONTO-YANG-MODELs).
 {{fig-yang2owl-flow}} sketches the use of the YANG2OWL tool to compute the `org.opendaylight.yangtools` ONTO-YANG-MODEL.
