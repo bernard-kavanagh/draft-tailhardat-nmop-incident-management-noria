@@ -1027,7 +1027,7 @@ then a valid JSON document with configuration data describing a node should be a
 So, in line with the mapping rules of YANG statement into OWL concepts defined in {{sec-exp-yang2owl-oc}}, when parsing a JSON tree that comply to a given YANG model we can assume that if we get a *key which value is a JSON object* then the *key should be the name of a container or a list* and its *value should be a description to be further analyzed*.
 Thus, in terms of knowledge graph modeling, this JSON object should be interpreted as an *instance of a class* which name is the *name of the container or of the list*.
 
-Conversely, if the value is a *litteral*, the *key* should be the *name of a leaf or a leaflist*.
+Conversely, if the value is a *litteral*, the *key* should be the *name of a leaf or a leaf-list*.
 Thus, in terms of knowledge graph modeling, the litteral should be interpreted as the *object of a DataProperty* which name is the *name of the leaf*.
 
 The JSON2RDF tool (which is part of the YANG2OWL framework) implements these principles, realizing the Y-INSTANCE-TO-KG use case.
