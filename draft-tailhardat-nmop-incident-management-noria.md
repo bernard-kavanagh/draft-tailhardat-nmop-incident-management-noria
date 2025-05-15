@@ -1190,7 +1190,7 @@ MATCH q1 = (e1) ((w)<-[:DEPENDS_ON]-(t)) {0,8}
 UNWIND t AS impacts
 RETURN DISTINCT impacts.resourceHostName
 ~~~
-{: #snippet-yang2owl-cypher-impact title="User query, in Cypher syntax using a quantified path pattern, for rendering dependency relationships in a Neo4j NeoDash display. The query seeks paths starting from the node e1 and propagates up to 8 times using the `DEPENDS_ON` relationships. The depth of 8 has been defined in relation to the characteristics of the networks addressed in the experimentation."}
+{: #snippet-yang2owl-cypher-impact title="User query, in Cypher syntax using a quantified path pattern, for rendering dependency relationships in a Neo4j NeoDash display. The query seeks paths starting from the node `e1` and propagates up to 8 times using the `DEPENDS_ON` relationships. The depth of 8 has been defined in relation to the characteristics of the networks addressed in the experimentation."}
 
 Situation Analysis:
 : Decision-making based on the results of the upstream task is the responsibility of the network administrator,
