@@ -769,7 +769,7 @@ Thanks to the linking between the two storage systems, users browsing aggregated
              │  └──────────────────────────────────────────┘
              │                             ┌────────┐  ┌──────┐
              │                             │ Stream │  │┌────┐│
-             └────────────────────────────►│ loader ├─►││TSDB││
+             └────────────────────────────►│ loader ├─►││TiDB││
                                            │        │  │└────┘│
                                            └────────┘  └──────┘
 ~~~~
@@ -808,7 +808,44 @@ Thanks to the linking between the two storage systems, users browsing aggregated
 ~~~~
 {: #fig-stream-mixed-kr title="Resulting knowledge representation for the mixed KG/non-KG data integration architecture for event data streams."}
 
-
+~~~~ ascii-art
+  ───On-premise────────────────────────────  ┌─┐  Scope-based querying
+  ┌Dom.─A─┐                                  │ │
+  │┌─────┐│  ┌──────┐           ┌─────────┐  │ │           ┌───────────┐
+─►││ KG  ││◄─┤TiDB  ├───────────┤SPARQL EP├─►│ ├─Network &─┤  NetOps   │
+  │└─────┘│  └──────┘           └─────────┘  │ ├─Usage─────┤Application│
+  └UG.─2──┘                                  │ │           └───────────┘
+  ┌Dom. B─┐                                  │ │           ┌───────────┐
+  │┌─────┐│  ┌──────┐           ┌─────────┐  │ ├─Network &─┤  SecOps   │
+─►││ KG  ││◄─┤TiDB  ├───────────┤SPARQL EP├─►│ ├─Security──┤Application│
+  │└─────┘│  └──────┘           └─────────┘  │F│           └───────────┘
+  └UG.─1┬─┘                                  │E│
+        └────────────────────────────────────│D│─────────────┐
+  ───On-premise / public-cloud─────────────  │E│             │
+  ┌Dom.─C─┐                                  │R│             ▼  Usage
+  │┌─────┐│  ┌──────┐ ┌───┐     ┌─────────┐  │A│           ┌────scope──┐
+─►││ RDB ││◄─┤TiDB  ├─┤VKG├─────┤SPARQL EP├─►│T│           │*          │
+  │└─────┘│  └──────┘ └───┘     └─────────┘  │E│   Network │   *  *    │
+  └UG.─1&2┘                                  │D│   scope───│────────┐  │
+  ┌Dom.─D─┐                                  │ │       │   │ *  *   │  │
+  │┌─────┐│  ┌──────┐ ┌───┐     ┌─────────┐  │Q│       │  *└───────────┘
+─►││TiDB ││◄─┤TiDB  ├─┤VKG├─────┤SPARQL EP├─►│U│       │  ┌───────────┐
+  │└─────┘│  └──────┘ └───┘     └─────────┘  │E│       │* │ *  *    │ │
+  └UG.─1──┘                                  │R│       └──│─────────┘ │
+  ┌Dom.─E─┐                                  │I│        ▲ │     *     │
+  │┌─────┐│  ┌──────┐ ┌───────┐ ┌─────────┐  │E│        │ │ *       * │
+─►││ LPG ││◄─┤GDBMS ├─┤QL tlt.├─┤SPARQL EP├─►│S│        │ └──Security─┘
+  │└─────┘│  └──────┘ └───────┘ └─────────┘  │ │        │    scope ▲
+  └UG.┬2──┘                                  │ │        │          │
+      └──────────────────────────────────────│ │────────┼──────────┘
+                                             │ │        │
+  ───Public-cloud──────────────────────────  │ │        │
+  ┌Dom.─F─┐                                  │ │        │
+  │┌─────┐│  ┌──────┐           ┌─────────┐  │ │        │
+─►││ KG  ││◄─┤KGDBMS├───────────┤SPARQL EP├─►│ │        │
+  │└─────┘│  └──────┘           └─────────┘  │ │        │
+  └UG.┬1&2┘                                  └─┘        │
+      └─────────────────────────────────────────────────┘
 ### Federated Data Architecture {#sec-etl-kgc-fq}
 
 The {{fig-multi-store}} illustrates the principles for providing unified access to data distributed across various technological platforms and stakeholders thanks to Federated Queries {{SPARQL11-FQ}} and the use of a shared ONTO-ITSM across data management platforms.
