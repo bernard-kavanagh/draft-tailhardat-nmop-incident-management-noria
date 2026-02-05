@@ -324,6 +324,25 @@ informative:
     title: "YANG Catalog"
     target: https://www.yangcatalog.org/
 
+  TiDB:
+    title: "TiDB: A Raft-based HTAP Database"
+    author:
+      - name: Huang, Dongxu
+      - name: Liu, Queeny
+      - name: Cui, Qiu
+      - name: Fang, Zhou
+      - name: Ma, Xiaoyu
+      - name: Xu, Fei
+      - name: Shen, Li
+      - name: Liu, L.
+      - name: Wang, Guoliang
+      - name: Zhou, Xuan
+      - name: Li, Zhanhuai
+    date: 2020
+    seriesinfo:
+      PVLDB: "Vol. 13, No. 12"
+    target: https://www.vldb.org/pvldb/vol13/p3072-huang.pdf  
+
 --- abstract
 
 Operational efficiency in incident management on telecom and computer networks requires correlating and interpreting large volumes of heterogeneous technical information.
@@ -812,24 +831,24 @@ Thanks to the linking between the two storage systems, users browsing aggregated
   ───On-premise────────────────────────────  ┌─┐  Scope-based querying
   ┌Dom.─A─┐                                  │ │
   │┌─────┐│  ┌──────┐           ┌─────────┐  │ │           ┌───────────┐
-─►││ KG  ││◄─┤TiDB  ├───────────┤SPARQL EP├─►│ ├─Network &─┤  NetOps   │
+─►││ KG  ││◄─┤RDBMS ├───────────┤SPARQL EP├─►│ ├─Network &─┤  NetOps   │
   │└─────┘│  └──────┘           └─────────┘  │ ├─Usage─────┤Application│
   └UG.─2──┘                                  │ │           └───────────┘
   ┌Dom. B─┐                                  │ │           ┌───────────┐
   │┌─────┐│  ┌──────┐           ┌─────────┐  │ ├─Network &─┤  SecOps   │
-─►││ KG  ││◄─┤TiDB  ├───────────┤SPARQL EP├─►│ ├─Security──┤Application│
+─►││ KG  ││◄─┤RDBMS ├───────────┤SPARQL EP├─►│ ├─Security──┤Application│
   │└─────┘│  └──────┘           └─────────┘  │F│           └───────────┘
   └UG.─1┬─┘                                  │E│
         └────────────────────────────────────│D│─────────────┐
   ───On-premise / public-cloud─────────────  │E│             │
   ┌Dom.─C─┐                                  │R│             ▼  Usage
   │┌─────┐│  ┌──────┐ ┌───┐     ┌─────────┐  │A│           ┌────scope──┐
-─►││ RDB ││◄─┤TiDB  ├─┤VKG├─────┤SPARQL EP├─►│T│           │*          │
+─►││ RDB ││◄─┤RDBMS ├─┤VKG├─────┤SPARQL EP├─►│T│           │*          │
   │└─────┘│  └──────┘ └───┘     └─────────┘  │E│   Network │   *  *    │
   └UG.─1&2┘                                  │D│   scope───│────────┐  │
   ┌Dom.─D─┐                                  │ │       │   │ *  *   │  │
   │┌─────┐│  ┌──────┐ ┌───┐     ┌─────────┐  │Q│       │  *└───────────┘
-─►││TiDB ││◄─┤TiDB  ├─┤VKG├─────┤SPARQL EP├─►│U│       │  ┌───────────┐
+─►││NoSQL││◄─┤RDBMS ├─┤VKG├─────┤SPARQL EP├─►│U│       │  ┌───────────┐
   │└─────┘│  └──────┘ └───┘     └─────────┘  │E│       │* │ *  *    │ │
   └UG.─1──┘                                  │R│       └──│─────────┘ │
   ┌Dom.─E─┐                                  │I│        ▲ │     *     │
