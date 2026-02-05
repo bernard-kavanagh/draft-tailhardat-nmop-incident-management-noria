@@ -875,6 +875,7 @@ classDiagram
     KnowledgeGraph ..> DistributedRDBMS : Vector Search (Similarity)
     DistributedRDBMS <|-- ExternalSources : Ingestion
 ~~~~
+
 {: #fig-multi-store title="Federated Data Architecture enabling Semantic and SQL interoperation."}
 
 ### Distributed RDBMS for Dynamic Network Topology and Schema Evolution {#sec-distributed-rdbms}
