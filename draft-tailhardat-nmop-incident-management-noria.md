@@ -850,7 +850,7 @@ Thanks to the linking between the two storage systems, users browsing aggregated
 
 The {{fig-multi-store}} illustrates the principles for providing unified access to data distributed across various technological platforms and stakeholders thanks to Federated Queries {{SPARQL11-FQ}} and the use of a shared ONTO-ITSM across data management platforms.
 
-```mermaid
+ ```mermaid
 %% Figure 12: Federated Data Architecture
 classDiagram
     class KnowledgeGraph {
