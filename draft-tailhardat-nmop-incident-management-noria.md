@@ -828,12 +828,12 @@ The {{fig-multi-store}} illustrates the principles for providing unified access 
   ───On-premise / public-cloud─────────────  │E│             │
   ┌Dom.─C─┐                                  │R│             ▼  Usage
   │┌─────┐│  ┌──────┐ ┌───┐     ┌─────────┐  │A│           ┌────scope──┐
-─►││ RDB ││◄─┤RDBMS ├─┤VKG├─────┤SPARQL EP├─►│T│           │*          │
+─►││ RDB ││◄─┤ TiDB ├─┤VKG├─────┤SPARQL EP├─►│T│           │*          │
   │└─────┘│  └──────┘ └───┘     └─────────┘  │E│   Network │   *  *    │
   └UG.─1&2┘                                  │D│   scope───│────────┐  │
   ┌Dom.─D─┐                                  │ │       │   │ *  *   │  │
   │┌─────┐│  ┌──────┐ ┌───┐     ┌─────────┐  │Q│       │  *└───────────┘
-─►││NoSQL││◄─┤RDBMS ├─┤VKG├─────┤SPARQL EP├─►│U│       │  ┌───────────┐
+─►││NoSQL││◄─┤ TiDB ├─┤VKG├─────┤SPARQL EP├─►│U│       │  ┌───────────┐
   │└─────┘│  └──────┘ └───┘     └─────────┘  │E│       │* │ *  *    │ │
   └UG.─1──┘                                  │R│       └──│─────────┘ │
   ┌Dom.─E─┐                                  │I│        ▲ │     *     │
