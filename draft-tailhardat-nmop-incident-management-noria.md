@@ -341,7 +341,7 @@ informative:
     date: 2020
     seriesinfo:
       PVLDB: "Vol. 13, No. 12"
-    target: https://www.vldb.org/pvldb/vol13/p3072-huang.pdf  
+    target: https://www.vldb.org/pvldb/vol13/p3072-huang.pdf
 
 --- abstract
 
